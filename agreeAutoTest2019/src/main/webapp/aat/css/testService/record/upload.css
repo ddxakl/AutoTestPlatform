@@ -1,0 +1,81 @@
+.mainBody {
+	width: 100%;
+	height: 100%;
+}
+
+.center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.footer {
+	position: absolute;
+	bottom: 6%;;
+	left: 0;
+	width: 100%;
+}
+
+#back {
+	position: relative;
+	margin: 0 auto;
+	color: #fffdfd;
+	width: 70px;
+	height: 40px;
+	background-color: #8ea6bb;
+	margin-left: 70%;
+	margin-right: 10px;
+	border: none;
+	float: left;
+}
+
+#next {
+	position: relative;
+	margin: 0 auto;
+	color: #fffdfd;
+	width: 120px;
+	height: 40px;
+	background-color: #1081de;
+	border: none;
+	float: left;
+}
+
+
+.upload-logo {
+	width: 135px;
+	height: auto;
+	margin: 0 auto;
+	display: block;
+}
+
+.uploadfile {
+	position: absolute;
+	width: 120px;
+	height: 40px;
+	top: 0px;
+	left: 0px;
+	filter: alpha(opacity : 0);
+	opacity: 0;
+	cursor: pointer;
+}
+
+.uploadscript {
+	position: relative;
+	margin: 0 auto;
+	/* display: block; */
+	color: #fffdfd;
+	/* color: red; */
+	width: 120px;
+	height: 40px;
+	background-color: #1081de;
+	/* text-align: center; */
+	display: -moz-box; /*兼容Firefox*/
+	display: -webkit-box; /*兼容FSafari、Chrome*/
+	/*上下居中*/
+	-moz-box-align: center; /*兼容Firefox*/
+	-webkit-box-align: center; /*兼容FSafari、Chrome */
+	/*左右居中*/
+	-moz-box-pack: center; /*兼容Firefox*/
+	-webkit-box-pack: center; /*兼容FSafari、Chrome */
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+
+	<context:component-scan
+		base-package="com.agree">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 事务采用全注解方式 -->
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+	<!-- 使用xml配置aop -->
+	<!-- 强制使用cglib代理，如果不设置，将默认使用jdk的代理，但是jdk的代理是基于接口的 -->
+	<aop:config proxy-target-class="true" />
+	<aop:config>
+		<!--定义切面 -->
+		<aop:aspect id="logAspect" ref="aspectAdvice">
+			<!-- 定义切入点 (配置在cn.com.agree.controller下所有的类在调用之前都会被拦截) -->
+			<aop:pointcut
+				expression="execution(* com.agree.aat.controller.*.*(..))"
+				id="logPointCut" />
+			<aop:pointcut
+				expression="execution(* com.agree.system.controller.*.*(..))"
+				id="logPointCut" />
+			<!--方法执行之前被调用执行的 -->
+			<aop:before method="before" pointcut-ref="logPointCut" /><!--一个切入点的引用 -->
+			<aop:after method="after" pointcut-ref="logPointCut" /><!--一个切入点的引用 -->
+		</aop:aspect>
+	</aop:config>
+	<!-- 基于注解的方式实现aop -->
+	<!-- <aop:aspectj-autoproxy proxy-target-class="true"> </aop:aspectj-autoproxy> -->
+</beans>

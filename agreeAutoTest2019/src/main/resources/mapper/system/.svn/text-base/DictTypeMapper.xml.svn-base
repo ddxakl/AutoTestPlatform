@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agree.system.dao.DictTypeMapper">
+  <resultMap id="BaseResultMap" type="com.agree.system.entity.DictType">
+    <id column="DICTTYPEID" jdbcType="VARCHAR" property="dicttypeid" />
+    <result column="DICTENAME" jdbcType="VARCHAR" property="dictename" />
+    <result column="DICTCNAME" jdbcType="VARCHAR" property="dictcname" />
+    <result column="DATATYPE" jdbcType="VARCHAR" property="datatype" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    DICTTYPEID, DICTENAME, DICTCNAME, DATATYPE
+  </sql>
+  <select id="listAll" resultMap="BaseResultMap">
+  	select 
+  		<include refid="Base_Column_List" />
+  	from NAT_SYS_DICTTYPE
+  </select>
+  <select id="selectByDicttypeid" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  		<include refid="Base_Column_List" />
+  	from NAT_SYS_DICTTYPE
+  	where DICTTYPEID = #{dicttypeid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_SYS_DICTTYPE
+    where DICTTYPEID = #{dicttypeid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllByPage"  resultMap="BaseResultMap">		
+	  select 
+	  	<include refid="Base_Column_List"/>
+	  	from NAT_SYS_DICTTYPE d
+	  	<where>
+	  		<if test="dictename!=null and !&quot;&quot;.equals(dictename.trim())">
+	  		and d.DICTENAME LIKE CONCAT(CONCAT('%',#{dictename}),'%')
+	  		</if>
+	  		<if test="dictcname!=null and !&quot;&quot;.equals(dictcname.trim())">
+	  		and d.DICTCNAME LIKE CONCAT(CONCAT('%',#{dictcname}),'%')
+	  		</if>	  		
+	  	</where>
+  </select>
+  <select id="selectByDict"  resultMap="BaseResultMap">
+     select 
+	  	<include refid="Base_Column_List"/>
+	  	from NAT_SYS_DICTTYPE 	  	
+	  	where DICTCNAME = #{dictcname,jdbcType=VARCHAR} and DICTENAME = #{dictename,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectNoSelfByDict"  resultMap="BaseResultMap">
+     select 
+	  	<include refid="Base_Column_List"/>
+	  	from NAT_SYS_DICTTYPE 	  	
+	  	where DICTCNAME = #{dictcname,jdbcType=VARCHAR} and DICTTYPEID != #{dicttypeid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NAT_SYS_DICTTYPE
+    where DICTTYPEID = #{dicttypeid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteMany" parameterType="java.lang.String">
+  	delete from NAT_SYS_DICTTYPE
+  	where DICTTYPEID in
+    <foreach item="did" collection="array" open="(" separator="," close=")">
+        #{did}
+    </foreach>
+  </delete>
+  <insert id="insert" parameterType="com.agree.system.entity.DictType">
+    insert into NAT_SYS_DICTTYPE (DICTTYPEID, DICTENAME, DICTCNAME, 
+      DATATYPE)
+    values (#{dicttypeid,jdbcType=VARCHAR}, #{dictename,jdbcType=VARCHAR}, #{dictcname,jdbcType=VARCHAR}, 
+      #{datatype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.agree.system.entity.DictType">
+    insert into NAT_SYS_DICTTYPE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dicttypeid != null">
+        DICTTYPEID,
+      </if>
+      <if test="dictename != null">
+        DICTENAME,
+      </if>
+      <if test="dictcname != null">
+        DICTCNAME,
+      </if>
+      <if test="datatype != null">
+        DATATYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dicttypeid != null">
+        #{dicttypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="dictename != null">
+        #{dictename,jdbcType=VARCHAR},
+      </if>
+      <if test="dictcname != null">
+        #{dictcname,jdbcType=VARCHAR},
+      </if>
+      <if test="datatype != null">
+        #{datatype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.agree.system.entity.DictType">
+    update NAT_SYS_DICTTYPE
+    <set>
+      <if test="dictename != null">
+        DICTENAME = #{dictename,jdbcType=VARCHAR},
+      </if>
+      <if test="dictcname != null">
+        DICTCNAME = #{dictcname,jdbcType=VARCHAR},
+      </if>
+      <if test="datatype != null">
+        DATATYPE = #{datatype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DICTTYPEID = #{dicttypeid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.agree.system.entity.DictType">
+    update NAT_SYS_DICTTYPE
+    set DICTENAME = #{dictename,jdbcType=VARCHAR},
+      DICTCNAME = #{dictcname,jdbcType=VARCHAR},
+      DATATYPE = #{datatype,jdbcType=VARCHAR}
+    where DICTTYPEID = #{dicttypeid,jdbcType=VARCHAR}
+  </update>
+</mapper>

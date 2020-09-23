@@ -1,0 +1,42 @@
+body {
+   /*  background:#ECF0F5; */
+    padding:0 20px 0 20px;
+}
+#breadLine {
+	border:0.1px solid  #999;
+	background:#999;
+	margin-bottom: 15px;
+	margin-top: -15px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.ztree li a.curSelectedNode {
+	padding-top:0px; 
+	background-color:#017ebc;
+	color:black; 
+	height:16px; 
+	border:1px #017ebc solid; 
+	opacity:0.8;
+}
+.ztree li a.curSelectedNode_Edit {
+	padding-top:0px; 
+	background-color:#017ebc; 
+	color:black; height:16px; 
+	border:1px #017ebc solid; 
+	opacity:0.8;
+}
+.modal-body {
+	margin: auto;
+	width: 300px;	
+}
+.modal-body-left {
+	margin-left: 0;
+}
+.panel-heading {
+	padding: 5px;
+}
+.breadcrumb{
+	background-color:transparent;
+	color: #999;
+}

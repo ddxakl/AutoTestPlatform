@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agree.aat.dao.ExecutePlanFlowsMapper">
+  <resultMap id="BaseResultMap" type="com.agree.aat.entity.ExecutePlanFlows">
+    <id column="PLANFLOWID" jdbcType="VARCHAR" property="planflowid" />
+    <result column="PLANNAME" jdbcType="VARCHAR" property="planname" />
+    <result column="PLANID" jdbcType="VARCHAR" property="planid" />
+    <result column="EXECUTER" jdbcType="VARCHAR" property="executer" />
+    <result column="ABVERSION" jdbcType="VARCHAR" property="abversion" />
+    <result column="DESCINFOS" jdbcType="VARCHAR" property="descinfos" />
+    <result column="EXECUTERESULT" jdbcType="VARCHAR" property="executeresult" />
+    <result column="TARGETTERMINALS" jdbcType="VARCHAR" property="targetterminals" />
+    <result column="STARTDATE" jdbcType="TIMESTAMP" property="startdate" />
+    <result column="ENDDATE" jdbcType="TIMESTAMP" property="enddate" />
+    <result column="SUCCSS" jdbcType="NUMERIC" property="succss" />
+    <result column="FAIL" jdbcType="NUMERIC" property="fail" />
+    <result column="PLANDESC" jdbcType="VARCHAR" property="plandesc" />
+    <result column="EXECUTEDESC" jdbcType="VARCHAR" property="executedesc" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="COUNT" jdbcType="NUMERIC" property="count" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    PLANFLOWID, PLANNAME, PLANID,EXECUTER, ABVERSION, DESCINFOS, EXECUTERESULT, TARGETTERMINALS, 
+    STARTDATE, ENDDATE, SUCCSS, FAIL, PLANDESC, EXECUTEDESC, STATUS, REMARK, COUNT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_PLANEXECUTE_FLOWS
+    where PLANFLOWID = #{planflowid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllByPage"  resultMap="BaseResultMap">		
+	  select 
+	  	<include refid="Base_Column_List"/>
+	  	from NAT_PLANEXECUTE_FLOWS p
+	  	<where>
+	  		<if test="planname!=null and !&quot;&quot;.equals(planname.trim())">
+	  		and p.PLANNAME LIKE CONCAT(CONCAT('%',#{planname}),'%')
+	  		</if>
+	  		<if test="startdate!=null">
+	  		and	p.STARTDATE &gt;=  to_date(#{startdate},'yyyy-MM-dd HH24:mi:ss')
+	  		</if>
+	  		<if test="enddate!=null">
+	  		and	p.ENDDATE &lt;= to_date(#{enddate},'yyyy-MM-dd HH24:mi:ss')
+	  		</if>	  		
+	  	</where>
+	  	order by p.STARTDATE desc
+  </select>
+  <select id="getReportDetailsListByPlanidNoPage" resultMap="BaseResultMap">			
+	  select 
+	  	<include refid="Base_Column_List" />
+	  	from NAT_PLANEXECUTE_FLOWS 
+	  	where PLANFLOWID = #{planflowid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NAT_PLANEXECUTE_FLOWS
+    where PLANFLOWID = #{planflowid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.agree.aat.entity.ExecutePlanFlows">
+    insert into NAT_PLANEXECUTE_FLOWS (PLANFLOWID, PLANNAME,PLANID, EXECUTER, 
+      ABVERSION, DESCINFOS, EXECUTERESULT, 
+      TARGETTERMINALS, STARTDATE, ENDDATE, 
+      SUCCSS, FAIL, PLANDESC, 
+      EXECUTEDESC, STATUS, REMARK, COUNT
+      )
+    values (#{planflowid,jdbcType=VARCHAR}, #{planname,jdbcType=VARCHAR},  #{planid,jdbcType=VARCHAR},#{executer,jdbcType=VARCHAR}, 
+      #{abversion,jdbcType=VARCHAR}, #{descinfos,jdbcType=VARCHAR}, #{executeresult,jdbcType=VARCHAR}, 
+      #{targetterminals,jdbcType=VARCHAR}, #{startdate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP}, 
+      #{succss,jdbcType=NUMERIC}, #{fail,jdbcType=NUMERIC}, #{plandesc,jdbcType=VARCHAR}, 
+      #{executedesc,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{count,jdbcType=NUMERIC}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.agree.aat.entity.ExecutePlanFlows">
+    insert into NAT_PLANEXECUTE_FLOWS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="planflowid != null">
+        PLANFLOWID,
+      </if>
+      <if test="planname != null">
+        PLANNAME,
+      </if>
+       <if test="planid != null">
+        PLANID,
+      </if>
+      <if test="executer != null">
+        EXECUTER,
+      </if>
+      <if test="abversion != null">
+        ABVERSION,
+      </if>
+      <if test="descinfos != null">
+        DESCINFOS,
+      </if>
+      <if test="executeresult != null">
+        EXECUTERESULT,
+      </if>
+      <if test="targetterminals != null">
+        TARGETTERMINALS,
+      </if>
+      <if test="startdate != null">
+        STARTDATE,
+      </if>
+      <if test="enddate != null">
+        ENDDATE,
+      </if>
+      <if test="succss != null">
+        SUCCSS,
+      </if>
+      <if test="fail != null">
+        FAIL,
+      </if>
+      <if test="plandesc != null">
+        PLANDESC,
+      </if>
+      <if test="executedesc != null">
+        EXECUTEDESC,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="count != null">
+        COUNT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="planflowid != null">
+        #{planflowid,jdbcType=VARCHAR},
+      </if>
+      <if test="planname != null">
+        #{planname,jdbcType=VARCHAR},
+      </if>
+       <if test="planid != null">
+        #{planid,jdbcType=VARCHAR},
+      </if>
+      <if test="executer != null">
+        #{executer,jdbcType=VARCHAR},
+      </if>
+      <if test="abversion != null">
+        #{abversion,jdbcType=VARCHAR},
+      </if>
+      <if test="descinfos != null">
+        #{descinfos,jdbcType=VARCHAR},
+      </if>
+      <if test="executeresult != null">
+        #{executeresult,jdbcType=VARCHAR},
+      </if>
+      <if test="targetterminals != null">
+        #{targetterminals,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null">
+        #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null">
+        #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="succss != null">
+        #{succss,jdbcType=NUMERIC},
+      </if>
+      <if test="fail != null">
+        #{fail,jdbcType=NUMERIC},
+      </if>
+      <if test="plandesc != null">
+        #{plandesc,jdbcType=VARCHAR},
+      </if>
+      <if test="executedesc != null">
+        #{executedesc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.agree.aat.entity.ExecutePlanFlows">
+    update NAT_PLANEXECUTE_FLOWS
+    <set>
+      <if test="planname != null">
+        PLANNAME = #{planname,jdbcType=VARCHAR},
+      </if>
+      <if test="planid != null">
+        PLANID = #{planid,jdbcType=VARCHAR},
+      </if>
+      <if test="executer != null">
+        EXECUTER = #{executer,jdbcType=VARCHAR},
+      </if>
+      <if test="abversion != null">
+        ABVERSION = #{abversion,jdbcType=VARCHAR},
+      </if>
+      <if test="descinfos != null">
+        DESCINFOS = #{descinfos,jdbcType=VARCHAR},
+      </if>
+      <if test="executeresult != null">
+        EXECUTERESULT = #{executeresult,jdbcType=VARCHAR},
+      </if>
+      <if test="targetterminals != null">
+        TARGETTERMINALS = #{targetterminals,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null">
+        STARTDATE = #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null">
+        ENDDATE = #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="succss != null">
+        SUCCSS = #{succss,jdbcType=NUMERIC},
+      </if>
+      <if test="fail != null">
+        FAIL = #{fail,jdbcType=NUMERIC},
+      </if>
+      <if test="plandesc != null">
+        PLANDESC = #{plandesc,jdbcType=VARCHAR},
+      </if>
+      <if test="executedesc != null">
+        EXECUTEDESC = #{executedesc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null">
+        COUNT = #{count,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where PLANFLOWID = #{planflowid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.agree.aat.entity.ExecutePlanFlows">
+    update NAT_PLANEXECUTE_FLOWS
+    set PLANNAME = #{planname,jdbcType=VARCHAR},
+      PLANID = #{planid,jdbcType=VARCHAR},
+      EXECUTER = #{executer,jdbcType=VARCHAR},
+      ABVERSION = #{abversion,jdbcType=VARCHAR},
+      DESCINFOS = #{descinfos,jdbcType=VARCHAR},
+      EXECUTERESULT = #{executeresult,jdbcType=VARCHAR},
+      TARGETTERMINALS = #{targetterminals,jdbcType=VARCHAR},
+      STARTDATE = #{startdate,jdbcType=TIMESTAMP},
+      ENDDATE = #{enddate,jdbcType=TIMESTAMP},
+      SUCCSS = #{succss,jdbcType=NUMERIC},
+      FAIL = #{fail,jdbcType=NUMERIC},
+      PLANDESC = #{plandesc,jdbcType=VARCHAR},
+      EXECUTEDESC = #{executedesc,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      COUNT = #{count,jdbcType=NUMERIC}
+    where PLANFLOWID = #{planflowid,jdbcType=VARCHAR}
+  </update>
+</mapper>

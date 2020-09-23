@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agree.system.dao.SystemUserMapper">
+  <resultMap id="BaseResultMap" type="com.agree.system.entity.SystemUser">
+    <id column="USERID" jdbcType="VARCHAR" property="userid" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="BELONGTO" jdbcType="VARCHAR" property="belongto" />
+    <result column="SEX" jdbcType="NUMERIC" property="sex" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="PHONENUMBER" jdbcType="VARCHAR" property="phonenumber" />
+    <result column="PERMISSION" jdbcType="VARCHAR" property="permission" />
+    <result column="ACCOUNT" jdbcType="VARCHAR" property="account" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="STATE" jdbcType="NUMERIC" property="state" />
+    <result column="CREATEUSER" jdbcType="VARCHAR" property="createuser" />
+    <result column="CREATENAME" jdbcType="VARCHAR" property="createname" />
+    <result column="CREATEDATE" jdbcType="TIMESTAMP" property="createdate" />
+    <result column="MODIFIEDUSER" jdbcType="VARCHAR" property="modifieduser" />
+    <result column="MODIFIEDNAME" jdbcType="VARCHAR" property="modifiedname" />
+    <result column="MODIFIEDDATE" jdbcType="TIMESTAMP" property="modifieddate" />
+    <result column="USERPOWER" jdbcType="NUMERIC" property="userpower" />
+  </resultMap>
+  
+  <resultMap id="UserResultMap" type="com.agree.system.entity.SystemUser">
+    <id column="USERID" jdbcType="VARCHAR" property="userid" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="BELONGTO" jdbcType="VARCHAR" property="belongto" />
+    <result column="SEX" jdbcType="NUMERIC" property="sex" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="PHONENUMBER" jdbcType="VARCHAR" property="phonenumber" />
+    <result column="PERMISSION" jdbcType="VARCHAR" property="permission" />
+    <result column="ACCOUNT" jdbcType="VARCHAR" property="account" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="STATE" jdbcType="NUMERIC" property="state" />
+    <result column="CREATEUSER" jdbcType="VARCHAR" property="createuser" />
+    <result column="CREATENAME" jdbcType="VARCHAR" property="createname" />
+    <result column="CREATEDATE" jdbcType="TIMESTAMP" property="createdate" />
+    <result column="MODIFIEDUSER" jdbcType="VARCHAR" property="modifieduser" />
+    <result column="MODIFIEDNAME" jdbcType="VARCHAR" property="modifiedname" />
+    <result column="MODIFIEDDATE" jdbcType="TIMESTAMP" property="modifieddate" />
+    <result column="USERPOWER" jdbcType="NUMERIC" property="userpower" />
+    
+    <collection property="rolist" javaType="list" resultMap="com.agree.system.dao.SystemRoleMapper.BaseResultMap"/>
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    USERID, USERNAME, BELONGTO, SEX, EMAIL, PHONENUMBER, PERMISSION, ACCOUNT, PASSWORD, 
+    STATE, CREATEUSER, CREATENAME, CREATEDATE, MODIFIEDUSER, MODIFIEDNAME, MODIFIEDDATE, 
+    USERPOWER
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_SYS_USER
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </select>
+  <select id="getUserList" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from NAT_SYS_USER u
+   	<where>
+  		<if test="username!=null and !&quot;&quot;.equals(username.trim())">
+  		and u.USERNAME LIKE CONCAT(CONCAT('%',#{username}),'%')
+  		</if>	
+  	</where>
+  </select>
+  <select id="selectByTerminalid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_SYS_USER
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectUserByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_SYS_USER
+    where USERNAME = #{username,jdbcType=VARCHAR}
+  </select>
+  <select id="selectRoleListById" parameterType="java.lang.String" resultMap="UserResultMap">	
+  	select 
+  	u.USERID, u.USERNAME, u.BELONGTO, u.SEX, u.PERMISSION, u.ACCOUNT, u.PASSWORD, u.STATE,
+  	r.ROLEID, r.ROLENAME, r.ROLEDESC, r.ISENABLE 
+  	from NAT_SYS_USER u 
+	LEFT JOIN NAT_SYS_USER_ROLE ur on u.USERID = ur.USERID
+  	LEFT JOIN NAT_SYS_ROLE r on ur.ROLEID = r.ROLEID
+  	where ur.USERID = #{userid,jdbcType=VARCHAR}
+  </select>
+  <select id="getEntity" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from NAT_SYS_USER u
+  	<where>
+  		<if test="account!=null">
+  		and u.ACCOUNT = #{account}
+  		</if>
+  		<if test="password!=null">
+  		and u.PASSWORD = #{password}
+  		</if>
+  	</where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NAT_SYS_USER
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.agree.system.entity.SystemUser">
+    insert into NAT_SYS_USER (USERID, USERNAME, BELONGTO, 
+      SEX, EMAIL, PHONENUMBER, 
+      PERMISSION, ACCOUNT, PASSWORD, 
+      STATE, CREATEUSER, CREATENAME, 
+      CREATEDATE, MODIFIEDUSER, MODIFIEDNAME, 
+      MODIFIEDDATE, USERPOWER)
+    values (#{userid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{belongto,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=NUMERIC}, #{email,jdbcType=VARCHAR}, #{phonenumber,jdbcType=VARCHAR}, 
+      #{permission,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{state,jdbcType=NUMERIC}, #{createuser,jdbcType=VARCHAR}, #{createname,jdbcType=VARCHAR}, 
+      #{createdate,jdbcType=TIMESTAMP}, #{modifieduser,jdbcType=VARCHAR}, #{modifiedname,jdbcType=VARCHAR}, 
+      #{modifieddate,jdbcType=TIMESTAMP}, #{userpower,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.agree.system.entity.SystemUser">
+    insert into NAT_SYS_USER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        USERID,
+      </if>
+      <if test="username != null">
+        USERNAME,
+      </if>
+      <if test="belongto != null">
+        BELONGTO,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="phonenumber != null">
+        PHONENUMBER,
+      </if>
+      <if test="permission != null">
+        PERMISSION,
+      </if>
+      <if test="account != null">
+        ACCOUNT,
+      </if>
+      <if test="password != null">
+        PASSWORD,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="createuser != null">
+        CREATEUSER,
+      </if>
+      <if test="createname != null">
+        CREATENAME,
+      </if>
+      <if test="createdate != null">
+        CREATEDATE,
+      </if>
+      <if test="modifieduser != null">
+        MODIFIEDUSER,
+      </if>
+      <if test="modifiedname != null">
+        MODIFIEDNAME,
+      </if>
+      <if test="modifieddate != null">
+        MODIFIEDDATE,
+      </if>
+      <if test="userpower != null">
+        USERPOWER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="belongto != null">
+        #{belongto,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=NUMERIC},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null">
+        #{phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=NUMERIC},
+      </if>
+      <if test="createuser != null">
+        #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="createname != null">
+        #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifieduser != null">
+        #{modifieduser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedname != null">
+        #{modifiedname,jdbcType=VARCHAR},
+      </if>
+      <if test="modifieddate != null">
+        #{modifieddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userpower != null">
+        #{userpower,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.agree.system.entity.SystemUser">
+    update NAT_SYS_USER
+    <set>
+      <if test="username != null">
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="belongto != null">
+        BELONGTO = #{belongto,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=NUMERIC},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null">
+        PHONENUMBER = #{phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        PERMISSION = #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        ACCOUNT = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=NUMERIC},
+      </if>
+      <if test="createuser != null">
+        CREATEUSER = #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="createname != null">
+        CREATENAME = #{createname,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifieduser != null">
+        MODIFIEDUSER = #{modifieduser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedname != null">
+        MODIFIEDNAME = #{modifiedname,jdbcType=VARCHAR},
+      </if>
+      <if test="modifieddate != null">
+        MODIFIEDDATE = #{modifieddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userpower != null">
+        USERPOWER = #{userpower,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.agree.system.entity.SystemUser">
+    update NAT_SYS_USER
+    set USERNAME = #{username,jdbcType=VARCHAR},
+      BELONGTO = #{belongto,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=NUMERIC},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      PHONENUMBER = #{phonenumber,jdbcType=VARCHAR},
+      PERMISSION = #{permission,jdbcType=VARCHAR},
+      ACCOUNT = #{account,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=NUMERIC},
+      CREATEUSER = #{createuser,jdbcType=VARCHAR},
+      CREATENAME = #{createname,jdbcType=VARCHAR},
+      CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+      MODIFIEDUSER = #{modifieduser,jdbcType=VARCHAR},
+      MODIFIEDNAME = #{modifiedname,jdbcType=VARCHAR},
+      MODIFIEDDATE = #{modifieddate,jdbcType=TIMESTAMP},
+      USERPOWER = #{userpower,jdbcType=NUMERIC}
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByUserid" parameterType="com.agree.system.entity.SystemUser">
+    update NAT_SYS_USER
+    set USERNAME = #{username,jdbcType=VARCHAR},
+   	  PASSWORD = #{password,jdbcType=VARCHAR},
+      BELONGTO = #{belongto,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=NUMERIC},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      PHONENUMBER = #{phonenumber,jdbcType=VARCHAR}
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </update>
+</mapper>

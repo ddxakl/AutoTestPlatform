@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agree.aat.dao.ExecuteFlowsMapper">
+  <resultMap id="BaseResultMap" type="com.agree.aat.entity.ExecuteFlows">
+    <id column="EXECUTEFLOWID" jdbcType="VARCHAR" property="executeflowid" />
+    <result column="TERMINALID" jdbcType="VARCHAR" property="terminalid" />
+    <result column="PLANID" jdbcType="VARCHAR" property="planid" />
+    <result column="CASEID" jdbcType="VARCHAR" property="caseid" />
+    <result column="USERID" jdbcType="VARCHAR" property="userid" />
+    <result column="TRANSCODE" jdbcType="VARCHAR" property="transcode" />
+    <result column="TRANSNAME" jdbcType="VARCHAR" property="transname" />
+    <result column="EXECUTER" jdbcType="VARCHAR" property="executer" />
+    <result column="CASENAME" jdbcType="VARCHAR" property="casename" />
+    <result column="STARTDATE" jdbcType="TIMESTAMP" property="startdate" />
+    <result column="ENDDATE" jdbcType="TIMESTAMP" property="enddate" />
+    <result column="EXECUTERESULT" jdbcType="VARCHAR" property="executeresult" />
+    <result column="LOGFILE" jdbcType="VARCHAR" property="logfile" />
+    <result column="EXECLIENTNAME" jdbcType="VARCHAR" property="execlientname" />
+    <result column="EXECLIENTIP" jdbcType="VARCHAR" property="execlientip" />
+    <result column="EXECLIENTTYPE" jdbcType="VARCHAR" property="execlienttype" />
+    <result column="NOTE" jdbcType="VARCHAR" property="note" />
+    <result column="PLANFLOWID" jdbcType="VARCHAR" property="planflowid" />
+    <result column="COMPONENTINDEX" jdbcType="CLOB" property="componentindex" />
+    <result column="PERFORMANCE" jdbcType="CLOB" property="performance" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    EXECUTEFLOWID, TERMINALID, PLANID, CASEID, USERID, TRANSCODE, TRANSNAME, EXECUTER, 
+    CASENAME, STARTDATE, ENDDATE, EXECUTERESULT, LOGFILE, EXECLIENTNAME, EXECLIENTIP, 
+    EXECLIENTTYPE, NOTE, PLANFLOWID, COMPONENTINDEX, PERFORMANCE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_EXECUTE_FLOWS
+    where EXECUTEFLOWID = #{executeflowid,jdbcType=VARCHAR}
+  </select>
+  <select id="getExecuteFlowsByPage" resultMap="BaseResultMap">			
+	  select 
+	  	<include refid="Base_Column_List" />
+	  	from NAT_EXECUTE_FLOWS t
+	  	<where>
+	  		<if test="startdate!=null">
+	  		and	t.startdate &gt;=  to_date(#{startdate},'yyyy-MM-dd HH24:mi:ss')
+	  		<!-- to_date(#{startdate},'yyyy-MM-dd HH:mm:ss') -->
+	  		</if>
+	  		<if test="enddate!=null">
+	  		and	t.enddate &lt;= to_date(#{enddate},'yyyy-MM-dd HH24:mi:ss')
+	  		</if>	
+	  		<if test="casename!=null">
+	  		and	t.casename LIKE CONCAT(CONCAT('%',#{casename}),'%')
+	  		</if>  
+	  		order by startdate desc
+	  	</where>
+  </select>
+<!--   <select id="getExecuteFlowNoPage" resultMap="BaseResultMap">			
+	  select 
+	  	<include refid="Base_Column_List" />
+	  	from NAT_EXECUTE_FLOWS 
+	  	where PLANFLOWID = #{planflowid,jdbcType=VARCHAR}
+	  	order by startdate desc
+  </select> -->
+  <select id="getExecuteFlowNoPage" resultMap="BaseResultMap">			
+	  select 
+	  	<include refid="Base_Column_List" />
+	  	from NAT_EXECUTE_FLOWS t
+	  	<where>
+		  	<if test="planflowid!=null">
+	  		and	t.planflowid = #{planflowid}
+	  		</if>
+	  		<if test="startdate!=null">
+	  		and	t.startdate &gt;= to_date(#{startdate},'yyyy-MM-dd HH24:mi:ss')
+	  		<!-- to_date(#{startdate},'yyyy-MM-dd HH:mm:ss') -->
+	  		</if>
+	  		<if test="enddate!=null">
+	  		and	t.enddate &lt;= to_date(#{enddate},'yyyy-MM-dd HH24:mi:ss')
+	  		</if>	
+	  		<if test="casename!=null">
+	  		and	t.casename LIKE CONCAT(CONCAT('%',#{casename}),'%')
+	  		</if>  
+	  		order by startdate desc
+	  	</where>
+  </select>
+  <select id="getListByExecuteflowid" parameterType="java.lang.String" resultMap="BaseResultMap">			
+	  select 
+	  	<include refid="Base_Column_List" />
+	  	from NAT_EXECUTE_FLOWS 
+	  	where EXECUTEFLOWID = #{executeflowid,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NAT_EXECUTE_FLOWS
+    where EXECUTEFLOWID = #{executeflowid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.agree.aat.entity.ExecuteFlows">
+    insert into NAT_EXECUTE_FLOWS (EXECUTEFLOWID, TERMINALID, PLANID, 
+      CASEID, USERID, TRANSCODE, 
+      TRANSNAME, EXECUTER, CASENAME, 
+      STARTDATE, ENDDATE, EXECUTERESULT, 
+      LOGFILE, EXECLIENTNAME, EXECLIENTIP, 
+      EXECLIENTTYPE, NOTE, PLANFLOWID, COMPONENTINDEX, PERFORMANCE)
+    values (#{executeflowid,jdbcType=VARCHAR}, #{terminalid,jdbcType=VARCHAR}, #{planid,jdbcType=VARCHAR}, 
+      #{caseid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{transcode,jdbcType=VARCHAR}, 
+      #{transname,jdbcType=VARCHAR}, #{executer,jdbcType=VARCHAR}, #{casename,jdbcType=VARCHAR}, 
+      #{startdate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP}, #{executeresult,jdbcType=VARCHAR}, 
+      #{logfile,jdbcType=VARCHAR}, #{execlientname,jdbcType=VARCHAR}, #{execlientip,jdbcType=VARCHAR}, 
+      #{execlienttype,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR},#{planflowid,jdbcType=VARCHAR},#{componentindex,jdbcType=CLOB},
+      #{performance,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.agree.aat.entity.ExecuteFlows">
+    insert into NAT_EXECUTE_FLOWS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="executeflowid != null">
+        EXECUTEFLOWID,
+      </if>
+      <if test="terminalid != null">
+        TERMINALID,
+      </if>
+      <if test="planid != null">
+        PLANID,
+      </if>
+      <if test="caseid != null">
+        CASEID,
+      </if>
+      <if test="userid != null">
+        USERID,
+      </if>
+      <if test="transcode != null">
+        TRANSCODE,
+      </if>
+      <if test="transname != null">
+        TRANSNAME,
+      </if>
+      <if test="executer != null">
+        EXECUTER,
+      </if>
+      <if test="casename != null">
+        CASENAME,
+      </if>
+      <if test="startdate != null">
+        STARTDATE,
+      </if>
+      <if test="enddate != null">
+        ENDDATE,
+      </if>
+      <if test="executeresult != null">
+        EXECUTERESULT,
+      </if>
+      <if test="logfile != null">
+        LOGFILE,
+      </if>
+      <if test="execlientname != null">
+        EXECLIENTNAME,
+      </if>
+      <if test="execlientip != null">
+        EXECLIENTIP,
+      </if>
+      <if test="execlienttype != null">
+        EXECLIENTTYPE,
+      </if>
+      <if test="note != null">
+        NOTE,
+      </if>
+      <if test="planflowid != null">
+        PLANFLOWID,
+      </if>
+      <if test="componentindex != null">
+        COMPONENTINDEX,
+      </if>
+      <if test="performance != null">
+        PERFORMANCE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="executeflowid != null">
+        #{executeflowid,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalid != null">
+        #{terminalid,jdbcType=VARCHAR},
+      </if>
+      <if test="planid != null">
+        #{planid,jdbcType=VARCHAR},
+      </if>
+      <if test="caseid != null">
+        #{caseid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="transcode != null">
+        #{transcode,jdbcType=VARCHAR},
+      </if>
+      <if test="transname != null">
+        #{transname,jdbcType=VARCHAR},
+      </if>
+      <if test="executer != null">
+        #{executer,jdbcType=VARCHAR},
+      </if>
+      <if test="casename != null">
+        #{casename,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null">
+        #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null">
+        #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="executeresult != null">
+        #{executeresult,jdbcType=VARCHAR},
+      </if>
+      <if test="logfile != null">
+        #{logfile,jdbcType=VARCHAR},
+      </if>
+      <if test="execlientname != null">
+        #{execlientname,jdbcType=VARCHAR},
+      </if>
+      <if test="execlientip != null">
+        #{execlientip,jdbcType=VARCHAR},
+      </if>
+      <if test="execlienttype != null">
+        #{execlienttype,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="planflowid != null">
+        #{planflowid,jdbcType=VARCHAR},
+      </if>
+      <if test="componentindex != null">
+        #{componentindex,jdbcType=CLOB},
+      </if>
+      <if test="performance != null">
+        #{performance,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.agree.aat.entity.ExecuteFlows">
+    update NAT_EXECUTE_FLOWS
+    <set>
+      <if test="terminalid != null">
+        TERMINALID = #{terminalid,jdbcType=VARCHAR},
+      </if>
+      <if test="planid != null">
+        PLANID = #{planid,jdbcType=VARCHAR},
+      </if>
+      <if test="caseid != null">
+        CASEID = #{caseid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        USERID = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="transcode != null">
+        TRANSCODE = #{transcode,jdbcType=VARCHAR},
+      </if>
+      <if test="transname != null">
+        TRANSNAME = #{transname,jdbcType=VARCHAR},
+      </if>
+      <if test="executer != null">
+        EXECUTER = #{executer,jdbcType=VARCHAR},
+      </if>
+      <if test="casename != null">
+        CASENAME = #{casename,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null">
+        STARTDATE = #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null">
+        ENDDATE = #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="executeresult != null">
+        EXECUTERESULT = #{executeresult,jdbcType=VARCHAR},
+      </if>
+      <if test="logfile != null">
+        LOGFILE = #{logfile,jdbcType=VARCHAR},
+      </if>
+      <if test="execlientname != null">
+        EXECLIENTNAME = #{execlientname,jdbcType=VARCHAR},
+      </if>
+      <if test="execlientip != null">
+        EXECLIENTIP = #{execlientip,jdbcType=VARCHAR},
+      </if>
+      <if test="execlienttype != null">
+        EXECLIENTTYPE = #{execlienttype,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        NOTE = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="planflowid != null">
+        PLANFLOWID = #{planflowid,jdbcType=VARCHAR},
+      </if>
+      <if test="componentindex != null">
+        COMPONENTINDEX = #{componentindex,jdbcType=CLOB},
+      </if>
+      <if test="performance != null">
+        PERFORMANCE = #{performance,jdbcType=CLOB},
+      </if>
+    </set>
+    where EXECUTEFLOWID = #{executeflowid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.agree.aat.entity.ExecuteFlows">
+    update NAT_EXECUTE_FLOWS
+    set TERMINALID = #{terminalid,jdbcType=VARCHAR},
+      PLANID = #{planid,jdbcType=VARCHAR},
+      CASEID = #{caseid,jdbcType=VARCHAR},
+      USERID = #{userid,jdbcType=VARCHAR},
+      TRANSCODE = #{transcode,jdbcType=VARCHAR},
+      TRANSNAME = #{transname,jdbcType=VARCHAR},
+      EXECUTER = #{executer,jdbcType=VARCHAR},
+      CASENAME = #{casename,jdbcType=VARCHAR},
+      STARTDATE = #{startdate,jdbcType=TIMESTAMP},
+      ENDDATE = #{enddate,jdbcType=TIMESTAMP},
+      EXECUTERESULT = #{executeresult,jdbcType=VARCHAR},
+      LOGFILE = #{logfile,jdbcType=VARCHAR},
+      EXECLIENTNAME = #{execlientname,jdbcType=VARCHAR},
+      EXECLIENTIP = #{execlientip,jdbcType=VARCHAR},
+      EXECLIENTTYPE = #{execlienttype,jdbcType=VARCHAR},
+      NOTE = #{note,jdbcType=VARCHAR},
+      PLANFLOWID = #{planflowid,jdbcType=VARCHAR},
+      COMPONENTINDEX = #{componentindex,jdbcType=CLOB},
+      PERFORMANCE = #{performance,jdbcType=CLOB}
+    where EXECUTEFLOWID = #{executeflowid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agree.system.dao.SystemUserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.agree.system.entity.SystemUserRole">
+    <id column="USERROLEID" jdbcType="VARCHAR" property="userroleid" />
+    <result column="USERID" jdbcType="VARCHAR" property="userid" />
+    <result column="ROLEID" jdbcType="VARCHAR" property="roleid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    USERROLEID, USERID, ROLEID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_SYS_USER_ROLE
+    where USERROLEID = #{userroleid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_SYS_USER_ROLE
+    where USERID = #{userId,jdbcType=VARCHAR}
+  </select>
+  <select id="getRoleIdByUserId" parameterType="java.lang.String" resultType="java.lang.String">
+    select 
+    ROLEID
+    from NAT_SYS_USER_ROLE
+    where USERID = #{userId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NAT_SYS_USER_ROLE
+    where USERROLEID = #{userroleid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByUserId" parameterType="java.lang.String">
+	delete from NAT_SYS_USER_ROLE 
+	where USERID = #{userid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.agree.system.entity.SystemUserRole">
+    insert into NAT_SYS_USER_ROLE (USERROLEID, USERID, ROLEID
+      )
+    values (#{userroleid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+	insert into NAT_SYS_USER_ROLE (USERID,ROLEID) 
+	<foreach collection="list" item="item" index="index" separator="UNION ALL">
+		SELECT
+    	#{item.userid},
+    	#{item.roleid} 
+    	FROM dual
+	</foreach>
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.agree.system.entity.SystemUserRole">
+    insert into NAT_SYS_USER_ROLE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userroleid != null">
+        USERROLEID,
+      </if>
+      <if test="userid != null">
+        USERID,
+      </if>
+      <if test="roleid != null">
+        ROLEID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userroleid != null">
+        #{userroleid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null">
+        #{roleid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.agree.system.entity.SystemUserRole">
+    update NAT_SYS_USER_ROLE
+    <set>
+      <if test="userid != null">
+        USERID = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null">
+        ROLEID = #{roleid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USERROLEID = #{userroleid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.agree.system.entity.SystemUserRole">
+    update NAT_SYS_USER_ROLE
+    set USERID = #{userid,jdbcType=VARCHAR},
+      ROLEID = #{roleid,jdbcType=VARCHAR}
+    where USERROLEID = #{userroleid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agree.aat.dao.ExecutePlanMapper">
+  <resultMap id="BaseResultMap" type="com.agree.aat.entity.ExecutePlan">
+    <id column="PLANID" jdbcType="VARCHAR" property="planid" />
+    <result column="PLANNAME" jdbcType="VARCHAR" property="planname" />
+    <result column="EXECUTER" jdbcType="VARCHAR" property="executer" />
+    <result column="ABVERSION" jdbcType="VARCHAR" property="abversion" />
+    <result column="DESCINFOS" jdbcType="VARCHAR" property="descinfos" />
+    <result column="EXECUTERESULT" jdbcType="VARCHAR" property="executeresult" />
+    <result column="TARGETTERMINALS" jdbcType="VARCHAR" property="targetterminals" />
+    <result column="CREATEDATE" jdbcType="TIMESTAMP" property="createdate" />
+    <result column="COUNT" jdbcType="NUMERIC" property="count" />
+    <result column="PLANDESC" jdbcType="VARCHAR" property="plandesc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    PLANID, PLANNAME, EXECUTER, ABVERSION, DESCINFOS, EXECUTERESULT, TARGETTERMINALS, 
+    CREATEDATE, COUNT, PLANDESC
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_EXECUTE_PLAN
+    where PLANID = #{planid,jdbcType=VARCHAR}
+  </select>
+  <select id="getPlanListById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_EXECUTE_PLAN
+    where PLANID = #{planid,jdbcType=VARCHAR}
+  </select>
+  <select id="getLatestPlanid" parameterType="java.lang.String" resultType="java.lang.String">
+    select 
+    PLANID
+    from NAT_EXECUTE_PLAN
+    where EXECUTER = #{executer,jdbcType=VARCHAR}
+    order by CREATEDATE desc
+  </select>
+  <select id="getPlanList"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_EXECUTE_PLAN n
+    <where>
+  		<if test="planname!=null and !&quot;&quot;.equals(planname.trim())">
+  		and n.PLANNAME LIKE CONCAT(CONCAT('%',#{planname}),'%')
+ 		</if>
+	  </where>
+	  order by n.CREATEDATE desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NAT_EXECUTE_PLAN
+    where PLANID = #{planid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.agree.aat.entity.ExecutePlan">
+    insert into NAT_EXECUTE_PLAN (PLANID, PLANNAME, EXECUTER, 
+      ABVERSION, DESCINFOS, EXECUTERESULT, 
+      TARGETTERMINALS, CREATEDATE, COUNT, 
+      PLANDESC)
+    values (#{planid,jdbcType=VARCHAR}, #{planname,jdbcType=VARCHAR}, #{executer,jdbcType=VARCHAR}, 
+      #{abversion,jdbcType=VARCHAR}, #{descinfos,jdbcType=VARCHAR}, #{executeresult,jdbcType=VARCHAR}, 
+      #{targetterminals,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{count,jdbcType=NUMERIC}, 
+      #{plandesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.agree.aat.entity.ExecutePlan">
+    insert into NAT_EXECUTE_PLAN
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="planid != null">
+        PLANID,
+      </if>
+      <if test="planname != null">
+        PLANNAME,
+      </if>
+      <if test="executer != null">
+        EXECUTER,
+      </if>
+      <if test="abversion != null">
+        ABVERSION,
+      </if>
+      <if test="descinfos != null">
+        DESCINFOS,
+      </if>
+      <if test="executeresult != null">
+        EXECUTERESULT,
+      </if>
+      <if test="targetterminals != null">
+        TARGETTERMINALS,
+      </if>
+      <if test="createdate != null">
+        CREATEDATE,
+      </if>
+      <if test="count != null">
+        COUNT,
+      </if>
+      <if test="plandesc != null">
+        PLANDESC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="planid != null">
+        #{planid,jdbcType=VARCHAR},
+      </if>
+      <if test="planname != null">
+        #{planname,jdbcType=VARCHAR},
+      </if>
+      <if test="executer != null">
+        #{executer,jdbcType=VARCHAR},
+      </if>
+      <if test="abversion != null">
+        #{abversion,jdbcType=VARCHAR},
+      </if>
+      <if test="descinfos != null">
+        #{descinfos,jdbcType=VARCHAR},
+      </if>
+      <if test="executeresult != null">
+        #{executeresult,jdbcType=VARCHAR},
+      </if>
+      <if test="targetterminals != null">
+        #{targetterminals,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=NUMERIC},
+      </if>
+      <if test="plandesc != null">
+        #{plandesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.agree.aat.entity.ExecutePlan">
+    update NAT_EXECUTE_PLAN
+    <set>
+      <if test="planname != null">
+        PLANNAME = #{planname,jdbcType=VARCHAR},
+      </if>
+      <if test="executer != null">
+        EXECUTER = #{executer,jdbcType=VARCHAR},
+      </if>
+      <if test="abversion != null">
+        ABVERSION = #{abversion,jdbcType=VARCHAR},
+      </if>
+      <if test="descinfos != null">
+        DESCINFOS = #{descinfos,jdbcType=VARCHAR},
+      </if>
+      <if test="executeresult != null">
+        EXECUTERESULT = #{executeresult,jdbcType=VARCHAR},
+      </if>
+      <if test="targetterminals != null">
+        TARGETTERMINALS = #{targetterminals,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="count != null">
+        COUNT = #{count,jdbcType=NUMERIC},
+      </if>
+      <if test="plandesc != null">
+        PLANDESC = #{plandesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PLANID = #{planid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.agree.aat.entity.ExecutePlan">
+    update NAT_EXECUTE_PLAN
+    set PLANNAME = #{planname,jdbcType=VARCHAR},
+      EXECUTER = #{executer,jdbcType=VARCHAR},
+      ABVERSION = #{abversion,jdbcType=VARCHAR},
+      DESCINFOS = #{descinfos,jdbcType=VARCHAR},
+      EXECUTERESULT = #{executeresult,jdbcType=VARCHAR},
+      TARGETTERMINALS = #{targetterminals,jdbcType=VARCHAR},
+      CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+      COUNT = #{count,jdbcType=NUMERIC},
+      PLANDESC = #{plandesc,jdbcType=VARCHAR}
+    where PLANID = #{planid,jdbcType=VARCHAR}
+  </update>
+   <update id="updateByRecord" parameterType="com.agree.aat.entity.ExecutePlan">
+    update NAT_EXECUTE_PLAN
+    set PLANNAME = #{planname,jdbcType=VARCHAR},
+      DESCINFOS = #{descinfos,jdbcType=VARCHAR}
+    where PLANID = #{planid,jdbcType=VARCHAR}
+  </update>
+   <update id="updateExecuteClient" parameterType="com.agree.aat.entity.ExecutePlan">
+    update NAT_EXECUTE_PLAN
+    set TARGETTERMINALS = #{targetname,jdbcType=VARCHAR}
+    where PLANID = #{planid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateCountAddByPlanid" parameterType="java.lang.String">
+    update NAT_EXECUTE_PLAN
+    set COUNT = count + 1
+    where PLANID = #{planid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateCountMinByPlanid" parameterType="java.lang.String">
+    update NAT_EXECUTE_PLAN
+    set COUNT = count - 1
+    where PLANID = #{planid,jdbcType=VARCHAR}
+  </update>
+</mapper>

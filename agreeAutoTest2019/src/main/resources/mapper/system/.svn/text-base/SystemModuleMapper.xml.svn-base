@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agree.system.dao.SystemModuleMapper">
+  <resultMap id="BaseResultMap" type="com.agree.system.entity.SystemModule">
+    <id column="MODULE_ID" jdbcType="NUMERIC" property="moduleId" />
+    <result column="BELONG" jdbcType="NUMERIC" property="belong" />
+    <result column="MODULE_NAME" jdbcType="VARCHAR" property="moduleName" />
+    <result column="PARENT_MODULE_ID" jdbcType="NUMERIC" property="parentModuleId" />
+    <result column="MODULE_TYPE" jdbcType="NUMERIC" property="moduleType" />
+    <result column="MODULE_LOCATION" jdbcType="VARCHAR" property="moduleLocation" />
+    <result column="MODULE_ORDER" jdbcType="NUMERIC" property="moduleOrder" />
+    <result column="PRIVILEGE_TYPE" jdbcType="NUMERIC" property="privilegeType" />
+    <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+    <result column="CREATE_NAME" jdbcType="VARCHAR" property="createName" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="MODIFIED_USER" jdbcType="VARCHAR" property="modifiedUser" />
+    <result column="MODIFIED_NAME" jdbcType="VARCHAR" property="modifiedName" />
+    <result column="MODIFIED_DATE" jdbcType="TIMESTAMP" property="modifiedDate" />
+    <result column="MODULE_IMG" jdbcType="VARCHAR" property="moduleImg" />
+    <result column="ISENABLE" jdbcType="NUMERIC" property="isenable" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    MODULE_ID, BELONG, MODULE_NAME, PARENT_MODULE_ID, MODULE_TYPE, MODULE_LOCATION, MODULE_ORDER, 
+    PRIVILEGE_TYPE, CREATE_USER, CREATE_NAME, CREATE_DATE, MODIFIED_USER, MODIFIED_NAME, 
+    MODIFIED_DATE, MODULE_IMG, ISENABLE, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_SYS_MOUDLE
+    where MODULE_ID = #{moduleId,jdbcType=NUMERIC}
+  </select>
+  
+  <select id="selectByBelong" resultMap="BaseResultMap">
+  	select  
+    <include refid="Base_Column_List" />
+    from NAT_SYS_MOUDLE
+    where BELONG = #{_parameter,jdbcType=NUMERIC}
+    and PARENT_MODULE_ID = -1
+  </select>
+  
+   <select id="selectBySubBelong" resultMap="BaseResultMap">
+  	select  
+    <include refid="Base_Column_List" />
+    from NAT_SYS_MOUDLE
+    where BELONG = #{_parameter,jdbcType=NUMERIC}
+    and PARENT_MODULE_ID != -1
+  </select>
+  
+  <select id="selectModuleByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_SYS_MOUDLE
+    where MODULE_ID = #{moduleId,jdbcType=NUMERIC}
+    order by MODULE_ORDER
+  </select>
+  
+  <select id="selectUserMenu" resultMap="BaseResultMap">
+	select 
+	<include refid="Base_Column_List" />
+	from NAT_SYS_MOUDLE
+	order by MODULE_ORDER
+  </select>
+  
+  <select id="selectAdminMenu" resultMap="BaseResultMap">
+	select 
+	<include refid="Base_Column_List" />
+	from NAT_SYS_MOUDLE
+	where BELONG = 1
+	order by MODULE_ORDER
+  </select>
+  
+  <select id="getBelongMenuList" resultMap="BaseResultMap">
+	select 
+	MODULE_NAME
+	from NAT_SYS_MOUDLE
+	where BELONG = 0
+	order by MODULE_ORDER
+  </select>
+  
+  <select id="getModIdByBelongIsZero" resultType="java.lang.Long">
+	select 
+	MODULE_ID
+	from NAT_SYS_MOUDLE
+	where BELONG = 0
+	order by MODULE_ORDER
+  </select>
+  
+  <select id="getUserModule" parameterType="java.lang.Long" resultMap="BaseResultMap">
+	select 
+	<include refid="Base_Column_List" />
+	from NAT_SYS_MOUDLE
+	where MODULE_ID = #{moduleId,jdbcType=NUMERIC}
+	order by MODULE_ORDER
+  </select>
+  
+  <select id="getUserParentModId" parameterType="java.lang.Long" resultType="java.lang.Long">
+	select 
+	PARENT_MODULE_ID
+	from NAT_SYS_MOUDLE
+	where MODULE_ID = #{moduleId,jdbcType=NUMERIC}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from NAT_SYS_MOUDLE
+    where MODULE_ID = #{moduleId,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.agree.system.entity.SystemModule">
+    insert into NAT_SYS_MOUDLE (MODULE_ID, BELONG, MODULE_NAME, 
+      PARENT_MODULE_ID, MODULE_TYPE, MODULE_LOCATION, 
+      MODULE_ORDER, PRIVILEGE_TYPE, CREATE_USER, 
+      CREATE_NAME, CREATE_DATE, MODIFIED_USER, 
+      MODIFIED_NAME, MODIFIED_DATE, MODULE_IMG, 
+      ISENABLE, REMARK)
+    values (#{moduleId,jdbcType=NUMERIC}, #{belong,jdbcType=NUMERIC}, #{moduleName,jdbcType=VARCHAR}, 
+      #{parentModuleId,jdbcType=NUMERIC}, #{moduleType,jdbcType=NUMERIC}, #{moduleLocation,jdbcType=VARCHAR}, 
+      #{moduleOrder,jdbcType=NUMERIC}, #{privilegeType,jdbcType=NUMERIC}, #{createUser,jdbcType=VARCHAR}, 
+      #{createName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifiedUser,jdbcType=VARCHAR}, 
+      #{modifiedName,jdbcType=VARCHAR}, #{modifiedDate,jdbcType=TIMESTAMP}, #{moduleImg,jdbcType=VARCHAR}, 
+      #{isenable,jdbcType=NUMERIC}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.agree.system.entity.SystemModule">
+    insert into NAT_SYS_MOUDLE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="moduleId != null">
+        MODULE_ID,
+      </if>
+      <if test="belong != null">
+        BELONG,
+      </if>
+      <if test="moduleName != null">
+        MODULE_NAME,
+      </if>
+      <if test="parentModuleId != null">
+        PARENT_MODULE_ID,
+      </if>
+      <if test="moduleType != null">
+        MODULE_TYPE,
+      </if>
+      <if test="moduleLocation != null">
+        MODULE_LOCATION,
+      </if>
+      <if test="moduleOrder != null">
+        MODULE_ORDER,
+      </if>
+      <if test="privilegeType != null">
+        PRIVILEGE_TYPE,
+      </if>
+      <if test="createUser != null">
+        CREATE_USER,
+      </if>
+      <if test="createName != null">
+        CREATE_NAME,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="modifiedUser != null">
+        MODIFIED_USER,
+      </if>
+      <if test="modifiedName != null">
+        MODIFIED_NAME,
+      </if>
+      <if test="modifiedDate != null">
+        MODIFIED_DATE,
+      </if>
+      <if test="moduleImg != null">
+        MODULE_IMG,
+      </if>
+      <if test="isenable != null">
+        ISENABLE,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="moduleId != null">
+        #{moduleId,jdbcType=NUMERIC},
+      </if>
+      <if test="belong != null">
+        #{belong,jdbcType=NUMERIC},
+      </if>
+      <if test="moduleName != null">
+        #{moduleName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentModuleId != null">
+        #{parentModuleId,jdbcType=NUMERIC},
+      </if>
+      <if test="moduleType != null">
+        #{moduleType,jdbcType=NUMERIC},
+      </if>
+      <if test="moduleLocation != null">
+        #{moduleLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleOrder != null">
+        #{moduleOrder,jdbcType=NUMERIC},
+      </if>
+      <if test="privilegeType != null">
+        #{privilegeType,jdbcType=NUMERIC},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedUser != null">
+        #{modifiedUser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedName != null">
+        #{modifiedName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedDate != null">
+        #{modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moduleImg != null">
+        #{moduleImg,jdbcType=VARCHAR},
+      </if>
+      <if test="isenable != null">
+        #{isenable,jdbcType=NUMERIC},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.agree.system.entity.SystemModule">
+    update NAT_SYS_MOUDLE
+    <set>
+      <if test="belong != null">
+        BELONG = #{belong,jdbcType=NUMERIC},
+      </if>
+      <if test="moduleName != null">
+        MODULE_NAME = #{moduleName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentModuleId != null">
+        PARENT_MODULE_ID = #{parentModuleId,jdbcType=NUMERIC},
+      </if>
+      <if test="moduleType != null">
+        MODULE_TYPE = #{moduleType,jdbcType=NUMERIC},
+      </if>
+      <if test="moduleLocation != null">
+        MODULE_LOCATION = #{moduleLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleOrder != null">
+        MODULE_ORDER = #{moduleOrder,jdbcType=NUMERIC},
+      </if>
+      <if test="privilegeType != null">
+        PRIVILEGE_TYPE = #{privilegeType,jdbcType=NUMERIC},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        CREATE_NAME = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedUser != null">
+        MODIFIED_USER = #{modifiedUser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedName != null">
+        MODIFIED_NAME = #{modifiedName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedDate != null">
+        MODIFIED_DATE = #{modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moduleImg != null">
+        MODULE_IMG = #{moduleImg,jdbcType=VARCHAR},
+      </if>
+      <if test="isenable != null">
+        ISENABLE = #{isenable,jdbcType=NUMERIC},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MODULE_ID = #{moduleId,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.agree.system.entity.SystemModule">
+    update NAT_SYS_MOUDLE
+    set BELONG = #{belong,jdbcType=NUMERIC},
+      MODULE_NAME = #{moduleName,jdbcType=VARCHAR},
+      PARENT_MODULE_ID = #{parentModuleId,jdbcType=NUMERIC},
+      MODULE_TYPE = #{moduleType,jdbcType=NUMERIC},
+      MODULE_LOCATION = #{moduleLocation,jdbcType=VARCHAR},
+      MODULE_ORDER = #{moduleOrder,jdbcType=NUMERIC},
+      PRIVILEGE_TYPE = #{privilegeType,jdbcType=NUMERIC},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_NAME = #{createName,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      MODIFIED_USER = #{modifiedUser,jdbcType=VARCHAR},
+      MODIFIED_NAME = #{modifiedName,jdbcType=VARCHAR},
+      MODIFIED_DATE = #{modifiedDate,jdbcType=TIMESTAMP},
+      MODULE_IMG = #{moduleImg,jdbcType=VARCHAR},
+      ISENABLE = #{isenable,jdbcType=NUMERIC},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where MODULE_ID = #{moduleId,jdbcType=NUMERIC}
+  </update>
+</mapper>

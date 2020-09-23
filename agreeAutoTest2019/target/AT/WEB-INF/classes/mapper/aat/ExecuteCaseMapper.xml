@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agree.system.dao.ExecuteCaseMapper">
+  <resultMap id="BaseResultMap" type="com.agree.system.entity.ExecuteCase">
+    <id column="CASEID" jdbcType="VARCHAR" property="caseid" />
+    <result column="CASENAME" jdbcType="VARCHAR" property="casename" />
+    <result column="CASEBELONG" jdbcType="VARCHAR" property="casebelong" />
+    <result column="ABVERSION" jdbcType="VARCHAR" property="abversion" />
+    <result column="CASETYPE" jdbcType="VARCHAR" property="casetype" />
+    <result column="CASEDESC" jdbcType="VARCHAR" property="casedesc" />
+    <result column="SCRIPTINFOS" jdbcType="VARCHAR" property="scriptinfos" />
+    <result column="USERID" jdbcType="VARCHAR" property="userid" />
+    <result column="CREATEDATE" jdbcType="VARCHAR" property="createdate" />
+    <result column="QUOTE" jdbcType="VARCHAR" property="quote" />
+    <result column="PLANID" jdbcType="VARCHAR" property="planid" />
+    <result column="TRADECODES" jdbcType="VARCHAR" property="tradecodes" />
+    <result column="CASEIDENTIFIER" jdbcType="VARCHAR" property="caseidentifier" />
+    <result column="BATCHCASE" jdbcType="VARCHAR" property="batchcase" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.agree.system.entity.ExecuteCase">
+    <result column="SCRIPTCLASS" jdbcType="BLOB" property="scriptclass" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CASEID, CASENAME, CASEBELONG, ABVERSION, CASETYPE, CASEDESC, SCRIPTINFOS, USERID, 
+    CREATEDATE, QUOTE, PLANID, TRADECODES, CASEIDENTIFIER, BATCHCASE
+  </sql>
+  <sql id="Blob_Column_List">
+    SCRIPTCLASS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from NAT_EXECUTE_CASE
+    where CASEID = #{caseid,jdbcType=VARCHAR}
+  </select>
+  	<select id="getAllExecuteCase" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from NAT_EXECUTE_CASE n
+    	<where>
+	  		<if test="casebelong!=null and !&quot;&quot;.equals(casebelong.trim())">
+	  		and n.CASEBELONG LIKE CONCAT(CONCAT('%',#{casebelong}),'%')
+	  		</if>	
+	  		<if test="casename!=null and !&quot;&quot;.equals(casename.trim())">
+	  		and n.CASENAME LIKE CONCAT(CONCAT('%',#{casename}),'%')
+	  		</if>
+	  		<if test="tradecodes!=null and !&quot;&quot;.equals(tradecodes.trim())">
+	  		and n.TRADECODES LIKE CONCAT(CONCAT('%',#{tradecodes}),'%')
+	  		</if>	
+	  		<if test="abversion!=null and !&quot;&quot;.equals(abversion.trim())">
+	  		and n.ABVERSION LIKE CONCAT(CONCAT('%',#{abversion}),'%')
+	  		</if>	 
+	  		<if test="casetype!=null and !&quot;&quot;.equals(casetype.trim())">
+	  		and n.CASETYPE = #{casetype,jdbcType=VARCHAR}
+	  		</if>
+	  		<if test="batchcase!=null and !&quot;&quot;.equals(batchcase.trim())">
+	  		and n.BATCHCASE = #{batchcase,jdbcType=VARCHAR}
+	  		</if>	
+	  	</where>
+	  	order by n.CREATEDATE desc
+	</select>
+  	<select id="getPlanCaseList" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from NAT_EXECUTE_CASE n
+		<where>
+	  		<if test="planid!=null and !&quot;&quot;.equals(planid.trim())">
+	  		 and  n.PLANID = #{planid,jdbcType=VARCHAR}
+	  		</if>	
+	  		<if test="casetype!=null and !&quot;&quot;.equals(casetype.trim())">
+	  		 and  n.CASETYPE = #{casetype,jdbcType=VARCHAR}
+	  		</if>
+	  	</where>
+	</select>
+	<select id="getListByCaseid" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from NAT_EXECUTE_CASE
+		where CASEID = #{caseid,jdbcType=VARCHAR}
+	</select>
+	<select id="existByCaseidentifier" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from NAT_EXECUTE_CASE
+		where CASEIDENTIFIER = #{caseidentifier,jdbcType=VARCHAR}
+	</select>
+	<select id="selectBatchcaseByCaseid" parameterType="java.lang.String" resultType="java.lang.String">
+		select
+		BATCHCASE
+		from NAT_EXECUTE_CASE
+		where CASEID = #{caseid,jdbcType=VARCHAR}
+	</select>
+	<select id="selectCaseidsByBatchcase" parameterType="java.lang.String" resultType="java.lang.String">
+		select
+		CASEID
+		from NAT_EXECUTE_CASE
+		where BATCHCASE = #{batchcase,jdbcType=VARCHAR}
+	</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NAT_EXECUTE_CASE
+    where CASEID = #{caseid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.agree.system.entity.ExecuteCase">
+    insert into NAT_EXECUTE_CASE (CASEID, CASENAME, CASEBELONG, 
+      ABVERSION, CASETYPE, CASEDESC, 
+      SCRIPTINFOS, USERID, CREATEDATE, 
+      QUOTE, PLANID, SCRIPTCLASS, TRADECODES, CASEIDENTIFIER,BATCHCASE
+      )
+    values (#{caseid,jdbcType=VARCHAR}, #{casename,jdbcType=VARCHAR}, #{casebelong,jdbcType=VARCHAR}, 
+      #{abversion,jdbcType=VARCHAR}, #{casetype,jdbcType=VARCHAR}, #{casedesc,jdbcType=VARCHAR}, 
+      #{scriptinfos,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{createdate,jdbcType=VARCHAR}, 
+      #{quote,jdbcType=VARCHAR}, #{planid,jdbcType=VARCHAR}, #{scriptclass,jdbcType=BLOB}, #{tradecodes,jdbcType=VARCHAR},
+      #{caseidentifier,jdbcType=VARCHAR}, #{batchcase,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.agree.system.entity.ExecuteCase">
+    insert into NAT_EXECUTE_CASE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="caseid != null">
+        CASEID,
+      </if>
+      <if test="casename != null">
+        CASENAME,
+      </if>
+      <if test="casebelong != null">
+        CASEBELONG,
+      </if>
+      <if test="abversion != null">
+        ABVERSION,
+      </if>
+      <if test="casetype != null">
+        CASETYPE,
+      </if>
+      <if test="casedesc != null">
+        CASEDESC,
+      </if>
+      <if test="scriptinfos != null">
+        SCRIPTINFOS,
+      </if>
+      <if test="userid != null">
+        USERID,
+      </if>
+      <if test="createdate != null">
+        CREATEDATE,
+      </if>
+      <if test="quote != null">
+        QUOTE,
+      </if>
+      <if test="planid != null">
+        PLANID,
+      </if>
+      <if test="scriptclass != null">
+        SCRIPTCLASS,
+      </if>
+      <if test="tradecodes != null">
+        TRADECODES,
+      </if>
+      <if test="caseidentifier != null">
+        CASEIDENTIFIER,
+      </if>
+       <if test="batchcase != null">
+        BATCHCASE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="caseid != null">
+        #{caseid,jdbcType=VARCHAR},
+      </if>
+      <if test="casename != null">
+        #{casename,jdbcType=VARCHAR},
+      </if>
+      <if test="casebelong != null">
+        #{casebelong,jdbcType=VARCHAR},
+      </if>
+      <if test="abversion != null">
+        #{abversion,jdbcType=VARCHAR},
+      </if>
+      <if test="casetype != null">
+        #{casetype,jdbcType=VARCHAR},
+      </if>
+      <if test="casedesc != null">
+        #{casedesc,jdbcType=VARCHAR},
+      </if>
+      <if test="scriptinfos != null">
+        #{scriptinfos,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="quote != null">
+        #{quote,jdbcType=VARCHAR},
+      </if>
+      <if test="planid != null">
+        #{planid,jdbcType=VARCHAR},
+      </if>
+      <if test="scriptclass != null">
+        #{scriptclass,jdbcType=BLOB},
+      </if>
+      <if test="tradecodes != null">
+        #{tradecodes,jdbcType=VARCHAR},
+      </if>
+      <if test="caseidentifier != null">
+        #{caseidentifier,jdbcType=VARCHAR},
+      </if>
+        <if test="batchcase != null">
+        #{batchcase,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.agree.system.entity.ExecuteCase">
+    update NAT_EXECUTE_CASE
+    <set>
+      <if test="casename != null">
+        CASENAME = #{casename,jdbcType=VARCHAR},
+      </if>
+      <if test="casebelong != null">
+        CASEBELONG = #{casebelong,jdbcType=VARCHAR},
+      </if>
+      <if test="abversion != null">
+        ABVERSION = #{abversion,jdbcType=VARCHAR},
+      </if>
+      <if test="casetype != null">
+        CASETYPE = #{casetype,jdbcType=VARCHAR},
+      </if>
+      <if test="casedesc != null">
+        CASEDESC = #{casedesc,jdbcType=VARCHAR},
+      </if>
+      <if test="scriptinfos != null">
+        SCRIPTINFOS = #{scriptinfos,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        USERID = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        CREATEDATE = #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="quote != null">
+        QUOTE = #{quote,jdbcType=VARCHAR},
+      </if>
+      <if test="planid != null">
+        PLANID = #{planid,jdbcType=VARCHAR},
+      </if>
+      <if test="scriptclass != null">
+        SCRIPTCLASS = #{scriptclass,jdbcType=BLOB},
+      </if>
+      <if test="tradecodes != null">
+        TRADECODES = #{tradecodes,jdbcType=VARCHAR},
+      </if>
+      <if test="caseidentifier != null">
+        CASEIDENTIFIER = #{caseidentifier,jdbcType=VARCHAR},
+      </if>
+      <if test="batchcase != null">
+        BATCHCASE = #{batchcase,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CASEID = #{caseid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.agree.system.entity.ExecuteCase">
+    update NAT_EXECUTE_CASE
+    set CASENAME = #{casename,jdbcType=VARCHAR},
+      CASEBELONG = #{casebelong,jdbcType=VARCHAR},
+      ABVERSION = #{abversion,jdbcType=VARCHAR},
+      CASETYPE = #{casetype,jdbcType=VARCHAR},
+      CASEDESC = #{casedesc,jdbcType=VARCHAR},
+      SCRIPTINFOS = #{scriptinfos,jdbcType=VARCHAR},
+      USERID = #{userid,jdbcType=VARCHAR},
+      CREATEDATE = #{createdate,jdbcType=VARCHAR},
+      QUOTE = #{quote,jdbcType=VARCHAR},
+      PLANID = #{planid,jdbcType=VARCHAR},
+      SCRIPTCLASS = #{scriptclass,jdbcType=BLOB},
+      TRADECODES = #{tradecodes,jdbcType=VARCHAR},
+      CASEIDENTIFIER = #{caseidentifier,jdbcType=VARCHAR},
+      BATCHCASE = #{batchcase,jdbcType=VARCHAR}
+    where CASEID = #{caseid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.agree.system.entity.ExecuteCase">
+    update NAT_EXECUTE_CASE
+    set CASENAME = #{casename,jdbcType=VARCHAR},
+      CASEBELONG = #{casebelong,jdbcType=VARCHAR},
+      ABVERSION = #{abversion,jdbcType=VARCHAR},
+      CASETYPE = #{casetype,jdbcType=VARCHAR},
+      CASEDESC = #{casedesc,jdbcType=VARCHAR},
+      SCRIPTINFOS = #{scriptinfos,jdbcType=VARCHAR},
+      USERID = #{userid,jdbcType=VARCHAR},
+      CREATEDATE = #{createdate,jdbcType=VARCHAR},
+      QUOTE = #{quote,jdbcType=VARCHAR},
+      PLANID = #{planid,jdbcType=VARCHAR},
+      TRADECODES = #{tradecodes,jdbcType=VARCHAR},
+      CASEIDENTIFIER = #{caseidentifier,jdbcType=VARCHAR},
+      BATCHCASE = #{batchcase,jdbcType=VARCHAR}
+    where CASEID = #{caseid,jdbcType=VARCHAR}
+  </update>
+  <update id="updatePlanCase" parameterType="com.agree.system.entity.ExecuteCase">
+    update NAT_EXECUTE_CASE
+    set  PLANID = #{planid,jdbcType=VARCHAR}
+    where CASEID = #{caseid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateBatchcaseByCaseid" parameterType="java.lang.String">
+    update NAT_EXECUTE_CASE
+    set  BATCHCASE = #{batchcase,jdbcType=VARCHAR}
+    where CASEID = #{caseid,jdbcType=VARCHAR}
+  </update>
+</mapper>

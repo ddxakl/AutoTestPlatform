@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agree.aat.dao.ExecuteResourceMapper">
+  <resultMap id="BaseResultMap" type="com.agree.aat.entity.ExecuteResource">
+    <id column="RESOURCEID" jdbcType="VARCHAR" property="resourceid" />
+    <result column="EXECUTEID" jdbcType="VARCHAR" property="executeid" />
+    <result column="RESNAME" jdbcType="VARCHAR" property="resname" />
+    <result column="RESTYPE" jdbcType="VARCHAR" property="restype" />
+    <result column="RESFILENAME" jdbcType="VARCHAR" property="resfilename" />
+    <result column="RESMARK" jdbcType="VARCHAR" property="resmark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    RESOURCEID, EXECUTEID, RESNAME, RESTYPE, RESFILENAME, RESMARK
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_EXECUTE_RESOURCE
+    where RESOURCEID = #{exeId,jdbcType=VARCHAR}
+  </select>
+   <select id="getExecutResByExeId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_EXECUTE_RESOURCE
+    where EXECUTEID = #{exeId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NAT_EXECUTE_RESOURCE
+    where RESOURCEID = #{resourceid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.agree.aat.entity.ExecuteResource">
+    insert into NAT_EXECUTE_RESOURCE (RESOURCEID, EXECUTEID, RESNAME, 
+      RESTYPE, RESFILENAME, RESMARK
+      )
+    values (#{resourceid,jdbcType=VARCHAR}, #{executeid,jdbcType=VARCHAR}, #{resname,jdbcType=VARCHAR}, 
+      #{restype,jdbcType=VARCHAR}, #{resfilename,jdbcType=VARCHAR}, #{resmark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.agree.aat.entity.ExecuteResource">
+    insert into NAT_EXECUTE_RESOURCE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="resourceid != null">
+        RESOURCEID,
+      </if>
+      <if test="executeid != null">
+        EXECUTEID,
+      </if>
+      <if test="resname != null">
+        RESNAME,
+      </if>
+      <if test="restype != null">
+        RESTYPE,
+      </if>
+      <if test="resfilename != null">
+        RESFILENAME,
+      </if>
+      <if test="resmark != null">
+        RESMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="resourceid != null">
+        #{resourceid,jdbcType=VARCHAR},
+      </if>
+      <if test="executeid != null">
+        #{executeid,jdbcType=VARCHAR},
+      </if>
+      <if test="resname != null">
+        #{resname,jdbcType=VARCHAR},
+      </if>
+      <if test="restype != null">
+        #{restype,jdbcType=VARCHAR},
+      </if>
+      <if test="resfilename != null">
+        #{resfilename,jdbcType=VARCHAR},
+      </if>
+      <if test="resmark != null">
+        #{resmark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.agree.aat.entity.ExecuteResource">
+    update NAT_EXECUTE_RESOURCE
+    <set>
+      <if test="executeid != null">
+        EXECUTEID = #{executeid,jdbcType=VARCHAR},
+      </if>
+      <if test="resname != null">
+        RESNAME = #{resname,jdbcType=VARCHAR},
+      </if>
+      <if test="restype != null">
+        RESTYPE = #{restype,jdbcType=VARCHAR},
+      </if>
+      <if test="resfilename != null">
+        RESFILENAME = #{resfilename,jdbcType=VARCHAR},
+      </if>
+      <if test="resmark != null">
+        RESMARK = #{resmark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RESOURCEID = #{resourceid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.agree.aat.entity.ExecuteResource">
+    update NAT_EXECUTE_RESOURCE
+    set EXECUTEID = #{executeid,jdbcType=VARCHAR},
+      RESNAME = #{resname,jdbcType=VARCHAR},
+      RESTYPE = #{restype,jdbcType=VARCHAR},
+      RESFILENAME = #{resfilename,jdbcType=VARCHAR},
+      RESMARK = #{resmark,jdbcType=VARCHAR}
+    where RESOURCEID = #{resourceid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agree.system.dao.SystemTerminalMapper">
+  <resultMap id="BaseResultMap" type="com.agree.system.entity.SystemTerminal">
+    <id column="TERMINALID" jdbcType="VARCHAR" property="terminalid" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="IP" jdbcType="VARCHAR" property="ip" />
+    <result column="PORT" jdbcType="VARCHAR" property="port" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="DESCINFOS" jdbcType="VARCHAR" property="descinfos" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    TERMINALID, NAME, IP, PORT, STATUS, DESCINFOS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_SYS_TERMINAL
+    where TERMINALID = #{terminalid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByTerminalid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_SYS_TERMINAL
+    where TERMINALID = #{terminalid,jdbcType=VARCHAR}
+  </select>
+  <select id="getEClientList" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from NAT_SYS_TERMINAL t
+    	<where>
+	  		<if test="name!=null and !&quot;&quot;.equals(name.trim())">
+	  		and t.NAME LIKE CONCAT(CONCAT('%',#{name}),'%')
+	  		</if>	
+	  		<if test="ip!=null and !&quot;&quot;.equals(ip.trim())">
+	  		and t.IP LIKE CONCAT(CONCAT('%',#{ip}),'%')
+	  		</if>	
+	  		<if test="status!=null and !&quot;&quot;.equals(status.trim())">
+	  		and t.STATUS LIKE CONCAT(CONCAT('%',#{status}),'%')
+	  		</if>	 
+	  	</where>
+  </select>
+   <select id="selectByStatus1" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from NAT_SYS_TERMINAL t
+    	<where>
+	  		and t.STATUS ='1'
+	  	</where>
+  </select>
+   <select id="getEClientByName" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from NAT_SYS_TERMINAL t
+    	<where>
+	  		and t.NAME =#{target,jdbcType=VARCHAR}
+	  	</where>
+  </select>
+  <select id="selectTerminalByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_SYS_TERMINAL
+    where NAME = #{name,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NAT_SYS_TERMINAL
+    where TERMINALID = #{terminalid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.agree.system.entity.SystemTerminal">
+    insert into NAT_SYS_TERMINAL (NAME, IP, 
+      PORT, STATUS, DESCINFOS
+      )
+    values (#{name,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
+      #{port,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{descinfos,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.agree.system.entity.SystemTerminal">
+    insert into NAT_SYS_TERMINAL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="terminalid != null">
+        TERMINALID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="ip != null">
+        IP,
+      </if>
+      <if test="port != null">
+        PORT,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="descinfos != null">
+        DESCINFOS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="terminalid != null">
+        #{terminalid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null">
+        #{port,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="descinfos != null">
+        #{descinfos,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.agree.system.entity.SystemTerminal">
+    update NAT_SYS_TERMINAL
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        IP = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null">
+        PORT = #{port,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="descinfos != null">
+        DESCINFOS = #{descinfos,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TERMINALID = #{terminalid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.agree.system.entity.SystemTerminal">
+    update NAT_SYS_TERMINAL
+    set NAME = #{name,jdbcType=VARCHAR},
+      IP = #{ip,jdbcType=VARCHAR},
+      PORT = #{port,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      DESCINFOS = #{descinfos,jdbcType=VARCHAR}
+    where TERMINALID = #{terminalid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByTerminalid" parameterType="com.agree.system.entity.SystemTerminal">
+    update NAT_SYS_TERMINAL
+    set NAME = #{name,jdbcType=VARCHAR},
+      IP = #{ip,jdbcType=VARCHAR},
+      PORT = #{port,jdbcType=VARCHAR},
+      DESCINFOS = #{descinfos,jdbcType=VARCHAR}
+    where TERMINALID = #{terminalid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateStatus">
+    update NAT_SYS_TERMINAL
+    set STATUS = #{status,jdbcType=VARCHAR}
+    where TERMINALID = #{terminalid,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

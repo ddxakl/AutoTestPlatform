@@ -1,0 +1,64 @@
+@charset "UTF-8";
+#addInfosForm .text-fail {
+	margin-left: 5px;
+	font-size: 12px;
+	position: relative;
+	top: -1px;
+	color: #eb4e3d;
+}
+#addInfosForm {
+	width: 420px;
+	margin: 100px auto;
+	padding: 0;
+}
+
+#addInfosForm>div {
+	display: -moz-box; /*兼容Firefox*/
+	display: -webkit-box; /*兼容FSafari、Chrome*/
+	/*上下居中*/
+	-moz-box-align: center; /*兼容Firefox*/
+	-webkit-box-align: center; /*兼容FSafari、Chrome */
+	/*左右居中*/
+	-moz-box-pack: center; /*兼容Firefox*/
+	-webkit-box-pack: center; /*兼容FSafari、Chrome */
+	position: relative;
+	margin: 0;
+	margin-top: 20px;
+}
+
+#addInfosForm>div>label {
+	width: 114px;
+	text-align: left;
+	font-size: 14px;
+	color: #333;
+	font-weight: 400;
+	padding: 0;
+	height: 32px;
+	line-height: 32px;
+}
+
+#addInfosForm>div>input {
+	width: 298px;
+	height: 32px;
+	border-radius: 2px;
+	background-color: #fff;
+	border: solid 1px #d1d2d3;
+	padding: 0 10px;
+	font-size: 13px;
+}
+
+.form-control {
+	width: 298px;
+	height: 32px;
+	border-radius: 2px;
+	border: solid 1px #d1d2d3;
+	padding: 0 10px;
+	font-size: 14px;
+	background-color: #fff;
+	margin-left: 3px;
+}
+
+.spanMust {
+	color: red;
+	margin-left: 120px;
+}

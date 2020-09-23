@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agree.aat.dao.ExpectResultMapper">
+  <resultMap id="BaseResultMap" type="com.agree.aat.entity.ExpectResult">
+    <id column="EXPECTRESULTID" jdbcType="VARCHAR" property="expectresultid" />
+    <result column="EXPECTRESULTCODE" jdbcType="VARCHAR" property="expectresultcode" />
+    <result column="EXPECTRESULTNAME" jdbcType="VARCHAR" property="expectresultname" />
+    <result column="EXPECTRESULTDESC" jdbcType="VARCHAR" property="expectresultdesc" />
+    <result column="EXPECTRESULTTYPE" jdbcType="VARCHAR" property="expectresulttype" />
+    <result column="CREATER" jdbcType="VARCHAR" property="creater" />
+    <result column="CREATEDATE" jdbcType="VARCHAR" property="createdate" />
+    <result column="EXPRESSION" jdbcType="VARCHAR" property="expression" />
+    <result column="EXPECTJDBC" jdbcType="VARCHAR" property="expectjdbc" />
+    <result column="EXPECTSQL" jdbcType="VARCHAR" property="expectsql" />
+    <result column="INDEX1" jdbcType="VARCHAR" property="index1" />
+    <result column="INDEX2" jdbcType="VARCHAR" property="index2" />
+    <result column="INDEX3" jdbcType="VARCHAR" property="index3" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    EXPECTRESULTID, EXPECTRESULTCODE, EXPECTRESULTNAME, EXPECTRESULTDESC, EXPECTRESULTTYPE, 
+    CREATER, CREATEDATE, EXPRESSION, EXPECTJDBC, EXPECTSQL, INDEX1, INDEX2, INDEX3
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_EXPECT_RESULT
+    where EXPECTRESULTID = #{expectresultid,jdbcType=VARCHAR}
+  </select>
+  <select id="getExpectRes" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_EXPECT_RESULT
+  </select>
+  <select id="getAllExpectResName" resultType="java.lang.String">
+    select 
+    EXPECTRESULTNAME
+    from NAT_EXPECT_RESULT
+  </select>
+   <select id="selectExpectResult"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_EXPECT_RESULT n
+   <where>
+	  	<if test="expectresultname!=null and !&quot;&quot;.equals(expectresultname.trim())">
+	  	and n.EXPECTRESULTNAME = #{expectresultname,jdbcType=VARCHAR}
+	  	</if>	
+	  	</where>
+	  	order by n.CREATEDATE desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NAT_EXPECT_RESULT
+    where EXPECTRESULTID = #{expectresultid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.agree.aat.entity.ExpectResult">
+    insert into NAT_EXPECT_RESULT (EXPECTRESULTID, EXPECTRESULTCODE, 
+      EXPECTRESULTNAME, EXPECTRESULTDESC, EXPECTRESULTTYPE, 
+      CREATER, CREATEDATE, EXPRESSION, 
+      EXPECTJDBC, EXPECTSQL, INDEX1, 
+      INDEX2, INDEX3)
+    values (#{expectresultid,jdbcType=VARCHAR}, #{expectresultcode,jdbcType=VARCHAR}, 
+      #{expectresultname,jdbcType=VARCHAR}, #{expectresultdesc,jdbcType=VARCHAR}, #{expectresulttype,jdbcType=VARCHAR}, 
+      #{creater,jdbcType=VARCHAR}, #{createdate,jdbcType=VARCHAR}, #{expression,jdbcType=VARCHAR}, 
+      #{expectjdbc,jdbcType=VARCHAR}, #{expectsql,jdbcType=VARCHAR}, #{index1,jdbcType=VARCHAR}, 
+      #{index2,jdbcType=VARCHAR}, #{index3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.agree.aat.entity.ExpectResult">
+    insert into NAT_EXPECT_RESULT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="expectresultid != null">
+        EXPECTRESULTID,
+      </if>
+      <if test="expectresultcode != null">
+        EXPECTRESULTCODE,
+      </if>
+      <if test="expectresultname != null">
+        EXPECTRESULTNAME,
+      </if>
+      <if test="expectresultdesc != null">
+        EXPECTRESULTDESC,
+      </if>
+      <if test="expectresulttype != null">
+        EXPECTRESULTTYPE,
+      </if>
+      <if test="creater != null">
+        CREATER,
+      </if>
+      <if test="createdate != null">
+        CREATEDATE,
+      </if>
+      <if test="expression != null">
+        EXPRESSION,
+      </if>
+      <if test="expectjdbc != null">
+        EXPECTJDBC,
+      </if>
+      <if test="expectsql != null">
+        EXPECTSQL,
+      </if>
+      <if test="index1 != null">
+        INDEX1,
+      </if>
+      <if test="index2 != null">
+        INDEX2,
+      </if>
+      <if test="index3 != null">
+        INDEX3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="expectresultid != null">
+        #{expectresultid,jdbcType=VARCHAR},
+      </if>
+      <if test="expectresultcode != null">
+        #{expectresultcode,jdbcType=VARCHAR},
+      </if>
+      <if test="expectresultname != null">
+        #{expectresultname,jdbcType=VARCHAR},
+      </if>
+      <if test="expectresultdesc != null">
+        #{expectresultdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="expectresulttype != null">
+        #{expectresulttype,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null">
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="expression != null">
+        #{expression,jdbcType=VARCHAR},
+      </if>
+      <if test="expectjdbc != null">
+        #{expectjdbc,jdbcType=VARCHAR},
+      </if>
+      <if test="expectsql != null">
+        #{expectsql,jdbcType=VARCHAR},
+      </if>
+      <if test="index1 != null">
+        #{index1,jdbcType=VARCHAR},
+      </if>
+      <if test="index2 != null">
+        #{index2,jdbcType=VARCHAR},
+      </if>
+      <if test="index3 != null">
+        #{index3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.agree.aat.entity.ExpectResult">
+    update NAT_EXPECT_RESULT
+    <set>
+      <if test="expectresultcode != null">
+        EXPECTRESULTCODE = #{expectresultcode,jdbcType=VARCHAR},
+      </if>
+      <if test="expectresultname != null">
+        EXPECTRESULTNAME = #{expectresultname,jdbcType=VARCHAR},
+      </if>
+      <if test="expectresultdesc != null">
+        EXPECTRESULTDESC = #{expectresultdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="expectresulttype != null">
+        EXPECTRESULTTYPE = #{expectresulttype,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null">
+        CREATER = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        CREATEDATE = #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="expression != null">
+        EXPRESSION = #{expression,jdbcType=VARCHAR},
+      </if>
+      <if test="expectjdbc != null">
+        EXPECTJDBC = #{expectjdbc,jdbcType=VARCHAR},
+      </if>
+      <if test="expectsql != null">
+        EXPECTSQL = #{expectsql,jdbcType=VARCHAR},
+      </if>
+      <if test="index1 != null">
+        INDEX1 = #{index1,jdbcType=VARCHAR},
+      </if>
+      <if test="index2 != null">
+        INDEX2 = #{index2,jdbcType=VARCHAR},
+      </if>
+      <if test="index3 != null">
+        INDEX3 = #{index3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where EXPECTRESULTID = #{expectresultid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.agree.aat.entity.ExpectResult">
+    update NAT_EXPECT_RESULT
+    set EXPECTRESULTCODE = #{expectresultcode,jdbcType=VARCHAR},
+      EXPECTRESULTNAME = #{expectresultname,jdbcType=VARCHAR},
+      EXPECTRESULTDESC = #{expectresultdesc,jdbcType=VARCHAR},
+      EXPECTRESULTTYPE = #{expectresulttype,jdbcType=VARCHAR},
+      CREATER = #{creater,jdbcType=VARCHAR},
+      CREATEDATE = #{createdate,jdbcType=VARCHAR},
+      EXPRESSION = #{expression,jdbcType=VARCHAR},
+      EXPECTJDBC = #{expectjdbc,jdbcType=VARCHAR},
+      EXPECTSQL = #{expectsql,jdbcType=VARCHAR},
+      INDEX1 = #{index1,jdbcType=VARCHAR},
+      INDEX2 = #{index2,jdbcType=VARCHAR},
+      INDEX3 = #{index3,jdbcType=VARCHAR}
+    where EXPECTRESULTID = #{expectresultid,jdbcType=VARCHAR}
+  </update>
+</mapper>

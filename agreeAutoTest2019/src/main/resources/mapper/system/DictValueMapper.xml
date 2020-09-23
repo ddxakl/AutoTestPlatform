@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agree.system.dao.DictValueMapper">
+  <resultMap id="BaseResultMap" type="com.agree.system.entity.DictValue">
+    <id column="DICTVALUEID" jdbcType="VARCHAR" property="dictvalueid" />
+    <result column="DICTTYPEID" jdbcType="VARCHAR" property="dicttypeid" />
+    <result column="DICTVALUE" jdbcType="VARCHAR" property="dictvalue" />
+    <result column="DICTNAME" jdbcType="VARCHAR" property="dictname" />
+    <result column="DICTDESC" jdbcType="VARCHAR" property="dictdesc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    DICTVALUEID, DICTTYPEID, DICTVALUE, DICTNAME, DICTDESC
+  </sql>
+  <select id="listAll" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from NAT_SYS_DICTVALUE
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_SYS_DICTVALUE
+    where DICTVALUEID = #{dictvalueid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_SYS_DICTVALUE
+    where DICTTYPEID = #{dicttypeid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByTypes" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_SYS_DICTVALUE
+    where DICTVALUEID in
+    <foreach item="did" collection="array" open="(" separator="," close=")">
+        #{did}
+    </foreach>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NAT_SYS_DICTVALUE
+    where DICTVALUEID = #{dictvalueid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteManyByTypeId" parameterType="java.lang.String">
+    delete from NAT_SYS_DICTVALUE
+    where DICTTYPEID = #{dicttypeid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteMany" parameterType="java.lang.String">
+  	delete from NAT_SYS_DICTVALUE
+  	where DICTVALUEID in
+    <foreach item="did" collection="array" open="(" separator="," close=")">
+        #{did}
+    </foreach>
+  </delete>
+  <delete id="deleteManyByValueId" parameterType="java.lang.String">
+  	delete from NAT_SYS_DICTVALUE
+  	where DICTVALUEID in
+    <foreach item="vid" collection="array" open="(" separator="," close=")">
+        #{vid}
+    </foreach>
+  </delete>
+  <insert id="insert" parameterType="com.agree.system.entity.DictValue">
+    insert into NAT_SYS_DICTVALUE (DICTVALUEID, DICTTYPEID, DICTVALUE, 
+      DICTNAME, DICTDESC)
+    values (#{dictvalueid,jdbcType=VARCHAR}, #{dicttypeid,jdbcType=VARCHAR}, #{dictvalue,jdbcType=VARCHAR}, 
+      #{dictname,jdbcType=VARCHAR}, #{dictdesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+  	insert into NAT_SYS_DICTVALUE (DICTTYPEID, DICTVALUE,DICTNAME, DICTDESC)
+    <foreach collection="list" item="item" index="index" separator="UNION ALL">
+    	SELECT
+    	#{item.dicttypeid},
+    	#{item.dictvalue},
+    	#{item.dictname},
+    	#{item.dictdesc}
+    	FROM dual
+    </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.agree.system.entity.DictValue">
+    insert into NAT_SYS_DICTVALUE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dictvalueid != null">
+        DICTVALUEID,
+      </if>
+      <if test="dicttypeid != null">
+        DICTTYPEID,
+      </if>
+      <if test="dictvalue != null">
+        DICTVALUE,
+      </if>
+      <if test="dictname != null">
+        DICTNAME,
+      </if>
+      <if test="dictdesc != null">
+        DICTDESC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dictvalueid != null">
+        #{dictvalueid,jdbcType=VARCHAR},
+      </if>
+      <if test="dicttypeid != null">
+        #{dicttypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="dictvalue != null">
+        #{dictvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="dictname != null">
+        #{dictname,jdbcType=VARCHAR},
+      </if>
+      <if test="dictdesc != null">
+        #{dictdesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.agree.system.entity.DictValue">
+    update NAT_SYS_DICTVALUE
+    <set>
+      <if test="dicttypeid != null">
+        DICTTYPEID = #{dicttypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="dictvalue != null">
+        DICTVALUE = #{dictvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="dictname != null">
+        DICTNAME = #{dictname,jdbcType=VARCHAR},
+      </if>
+      <if test="dictdesc != null">
+        DICTDESC = #{dictdesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DICTVALUEID = #{dictvalueid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.agree.system.entity.DictValue">
+    update NAT_SYS_DICTVALUE
+    set DICTTYPEID = #{dicttypeid,jdbcType=VARCHAR},
+      DICTVALUE = #{dictvalue,jdbcType=VARCHAR},
+      DICTNAME = #{dictname,jdbcType=VARCHAR},
+      DICTDESC = #{dictdesc,jdbcType=VARCHAR}
+    where DICTVALUEID = #{dictvalueid,jdbcType=VARCHAR}
+  </update>
+</mapper>

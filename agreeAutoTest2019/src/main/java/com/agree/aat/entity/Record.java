@@ -1,0 +1,95 @@
+package com.agree.aat.entity;
+
+import java.io.Serializable;
+
+public class Record  implements Serializable{
+	 private String caseid;
+
+	    private String casename;
+
+	    private String casebelong;
+
+	    private String abversion;
+
+	    private String casetype;
+
+	    private String casedesc;
+
+	    private String scriptinfos;
+
+	    private String userid;
+
+	    private String createdate;
+
+	    public String getCaseid() {
+	        return caseid;
+	    }
+
+	    public void setCaseid(String caseid) {
+	        this.caseid = caseid == null ? null : caseid.trim();
+	    }
+
+	    public String getCasename() {
+	        return casename;
+	    }
+
+	    public void setCasename(String casename) {
+	        this.casename = casename == null ? null : casename.trim();
+	    }
+
+	    public String getCasebelong() {
+	        return casebelong;
+	    }
+
+	    public void setCasebelong(String casebelong) {
+	        this.casebelong = casebelong == null ? null : casebelong.trim();
+	    }
+
+	    public String getAbversion() {
+	        return abversion;
+	    }
+
+	    public void setAbversion(String abversion) {
+	        this.abversion = abversion == null ? null : abversion.trim();
+	    }
+
+	    public String getCasetype() {
+	        return casetype;
+	    }
+
+	    public void setCasetype(String casetype) {
+	        this.casetype = casetype == null ? null : casetype.trim();
+	    }
+
+	    public String getCasedesc() {
+	        return casedesc;
+	    }
+
+	    public void setCasedesc(String casedesc) {
+	        this.casedesc = casedesc == null ? null : casedesc.trim();
+	    }
+
+	    public String getScriptinfos() {
+	        return scriptinfos;
+	    }
+
+	    public void setScriptinfos(String scriptinfos) {
+	        this.scriptinfos = scriptinfos == null ? null : scriptinfos.trim();
+	    }
+
+	    public String getUserid() {
+	        return userid;
+	    }
+
+	    public void setUserid(String userid) {
+	        this.userid = userid == null ? null : userid.trim();
+	    }
+
+	    public String getCreatedate() {
+	        return createdate;
+	    }
+
+	    public void setCreatedate(String createdate) {
+	        this.createdate = createdate == null ? null : createdate.trim();
+	    }
+}

@@ -1,0 +1,25 @@
+@charset "UTF-8";
+.next {
+	position: relative;
+	margin: 0 auto;
+	color: #fffdfd;
+	width: 120px;
+	height: 40px;
+	background-color: #1081de;
+	margin-left: 80%;
+	border: none;
+}
+.breadLine {
+	border: 0.5px solid #999;
+	background: #999;
+	margin-bottom: 15px;
+	margin-top: -15px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+.footer {
+	position: absolute;
+	bottom: 6%;;
+	left: 0;
+	width: 100%;
+}

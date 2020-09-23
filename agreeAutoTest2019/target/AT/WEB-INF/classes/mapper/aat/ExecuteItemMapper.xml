@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agree.system.dao.ExecuteItemMapper">
+  <resultMap id="BaseResultMap" type="com.agree.system.entity.ExecuteItem">
+    <id column="ITEMID" jdbcType="VARCHAR" property="itemid" />
+    <result column="ITEMCODE" jdbcType="VARCHAR" property="itemcode" />
+    <result column="ITEMVALUE" jdbcType="VARCHAR" property="itemvalue" />
+    <result column="ADDVALUE" jdbcType="VARCHAR" property="addvalue" />
+    <result column="TRADECODE" jdbcType="VARCHAR" property="tradecode" />
+      <result column="ITEMNAME" jdbcType="VARCHAR" property="itemname" />
+    <result column="PAGECODE" jdbcType="VARCHAR" property="pagecode" />
+    <result column="ITEMTYPE" jdbcType="VARCHAR" property="itemtype" />
+    <result column="CREATEDATE" jdbcType="VARCHAR" property="createdate" />
+    <result column="CASEID" jdbcType="VARCHAR" property="caseid" />
+    <result column="ITEMINDEX" jdbcType="NUMERIC" property="itemindex" />
+    <result column="ITEMEVENT" jdbcType="VARCHAR" property="itemevent" />
+    <result column="ITEMALIAS" jdbcType="VARCHAR" property="itemalias" />
+    <result column="ISSCREEN" jdbcType="VARCHAR" property="isscreen" />
+     <result column="RELATIONVALUE" jdbcType="VARCHAR" property="relationvalue" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ITEMID, ITEMCODE, ITEMVALUE, ADDVALUE, TRADECODE, PAGECODE, ITEMTYPE, CREATEDATE, 
+    CASEID, ITEMINDEX,ITEMNAME, ITEMEVENT, ITEMALIAS, ISSCREEN,RELATIONVALUE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_EXECUTE_ITEM
+    where ITEMID = #{itemid,jdbcType=VARCHAR}
+  </select>
+  <select id="getCaseInfoByCaseid" parameterType="java.lang.String" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from NAT_EXECUTE_ITEM
+   	where CASEID = #{caseid,jdbcType=VARCHAR}
+   	order by ITEMINDEX
+  </select>
+  <select id="selectAliasByCaseid" parameterType="java.lang.String" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from NAT_EXECUTE_ITEM
+   	where CASEID = #{caseid,jdbcType=VARCHAR}
+  </select>
+  <select id="getListByItemid" parameterType="java.lang.String" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from NAT_EXECUTE_ITEM
+   	where ITEMID = #{itemid,jdbcType=VARCHAR}
+  </select>
+  <select id="getItemListByItemid" parameterType="java.lang.String" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from NAT_EXECUTE_ITEM
+   	where ITEMID = #{itemid,jdbcType=VARCHAR}
+  </select>
+  <select id="getItemidByCaseid" parameterType="java.lang.String" resultType="java.lang.String">
+	select
+	ITEMID
+	from NAT_EXECUTE_ITEM
+   	where CASEID = #{caseid,jdbcType=VARCHAR}
+  </select>
+  <select id="getItemindexByItemid" parameterType="java.lang.String" resultType="java.lang.Long">
+	select
+	ITEMINDEX
+	from NAT_EXECUTE_ITEM
+   	where ITEMID = #{itemid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NAT_EXECUTE_ITEM
+    where ITEMID = #{itemid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.agree.system.entity.ExecuteItem">
+    insert into NAT_EXECUTE_ITEM (ITEMID, ITEMCODE, ITEMVALUE, 
+      ADDVALUE, TRADECODE, PAGECODE, 
+      ITEMTYPE, CREATEDATE, CASEID, 
+      ITEMINDEX,ITEMNAME,ITEMEVENT,ITEMALIAS,ISSCREEN,RELATIONVALUE)
+    values (#{itemid,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, #{itemvalue,jdbcType=VARCHAR}, 
+      #{addvalue,jdbcType=VARCHAR}, #{tradecode,jdbcType=VARCHAR}, #{pagecode,jdbcType=VARCHAR}, 
+      #{itemtype,jdbcType=VARCHAR}, #{createdate,jdbcType=VARCHAR}, #{caseid,jdbcType=VARCHAR}, 
+      #{itemindex,jdbcType=NUMERIC},#{itemname,jdbcType=VARCHAR},#{itemevent,jdbcType=VARCHAR},#{itemalias,jdbcType=VARCHAR},#{isscreen,jdbcType=VARCHAR},#{relationvalue,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.agree.system.entity.ExecuteItem">
+    insert into NAT_EXECUTE_ITEM
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemid != null">
+        ITEMID,
+      </if>
+      <if test="itemcode != null">
+        ITEMCODE,
+      </if>
+      <if test="itemvalue != null">
+        ITEMVALUE,
+      </if>
+      <if test="addvalue != null">
+        ADDVALUE,
+      </if>
+      <if test="tradecode != null">
+        TRADECODE,
+      </if>
+      <if test="pagecode != null">
+        PAGECODE,
+      </if>
+      <if test="itemtype != null">
+        ITEMTYPE,
+      </if>
+      <if test="createdate != null">
+        CREATEDATE,
+      </if>
+      <if test="caseid != null">
+        CASEID,
+      </if>
+      <if test="itemindex != null">
+        ITEMINDEX,
+      </if>
+      <if test="itemname != null">
+        ITEMNAME,
+      </if>
+      <if test="itemevent != null">
+        ITEMEVENT,
+      </if>
+      <if test="itemalias != null">
+        ITEMALIAS,
+      </if>
+      <if test="isscreen != null">
+        ISSCREEN,
+      </if>
+       <if test="relationvalue != null">
+        RELATIONVALUE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemid != null">
+        #{itemid,jdbcType=VARCHAR},
+      </if>
+      <if test="itemcode != null">
+        #{itemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemvalue != null">
+        #{itemvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="addvalue != null">
+        #{addvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="tradecode != null">
+        #{tradecode,jdbcType=VARCHAR},
+      </if>
+      <if test="pagecode != null">
+        #{pagecode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemtype != null">
+        #{itemtype,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="caseid != null">
+        #{caseid,jdbcType=VARCHAR},
+      </if>
+      <if test="itemindex != null">
+        #{itemindex,jdbcType=NUMERIC},
+      </if>
+      <if test="itemname != null">
+        #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="itemevent != null">
+        #{itemevent,jdbcType=VARCHAR},
+      </if>
+      <if test="itemalias != null">
+        #{itemalias,jdbcType=VARCHAR},
+      </if>
+      <if test="isscreen != null">
+        #{isscreen,jdbcType=VARCHAR},
+      </if>
+       <if test="relationvalue != null">
+        #{relationvalue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.agree.system.entity.ExecuteItem">
+    update NAT_EXECUTE_ITEM
+    <set>
+      <if test="itemcode != null">
+        ITEMCODE = #{itemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemvalue != null">
+        ITEMVALUE = #{itemvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="addvalue != null">
+        ADDVALUE = #{addvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="tradecode != null">
+        TRADECODE = #{tradecode,jdbcType=VARCHAR},
+      </if>
+      <if test="pagecode != null">
+        PAGECODE = #{pagecode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemtype != null">
+        ITEMTYPE = #{itemtype,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        CREATEDATE = #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="caseid != null">
+        CASEID = #{caseid,jdbcType=VARCHAR},
+      </if>
+      <if test="itemindex != null">
+        ITEMINDEX = #{itemindex,jdbcType=NUMERIC},
+      </if>
+      <if test="itemname != null">
+        ITEMNAME = #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="itemevent != null">
+        ITEMEVENT = #{itemevent,jdbcType=VARCHAR},
+      </if>
+      <if test="itemalias != null">
+        ITEMALIAS = #{itemalias,jdbcType=VARCHAR},
+      </if>
+      <if test="isscreen != null">
+        ISSCREEN = #{isscreen,jdbcType=VARCHAR},
+      </if>
+      <if test="relationvalue != null">
+        RELATIONVALUE = #{relationvalue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ITEMID = #{itemid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.agree.system.entity.ExecuteItem">
+    update NAT_EXECUTE_ITEM
+    set ITEMCODE = #{itemcode,jdbcType=VARCHAR},
+      ITEMVALUE = #{itemvalue,jdbcType=VARCHAR},
+      ADDVALUE = #{addvalue,jdbcType=VARCHAR},
+      TRADECODE = #{tradecode,jdbcType=VARCHAR},
+      PAGECODE = #{pagecode,jdbcType=VARCHAR},
+      ITEMTYPE = #{itemtype,jdbcType=VARCHAR},
+      CREATEDATE = #{createdate,jdbcType=VARCHAR},
+      CASEID = #{caseid,jdbcType=VARCHAR},
+      ITEMINDEX = #{itemindex,jdbcType=NUMERIC},
+      ITEMNAME = #{itemname,jdbcType=VARCHAR},
+      ITEMEVENT = #{itemevent,jdbcType=VARCHAR},
+      ITEMALIAS = #{itemalias,jdbcType=VARCHAR},
+      ISSCREEN = #{isscreen,jdbcType=VARCHAR},
+      RELATIONVALUE = #{relationvalue,jdbcType=VARCHAR}
+    where ITEMID = #{itemid,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="uptItemByItemid" parameterType="com.agree.system.entity.ExecuteItem">
+    update NAT_EXECUTE_ITEM
+    set ITEMCODE = #{itemcode,jdbcType=VARCHAR},
+      ITEMVALUE = #{itemvalue,jdbcType=VARCHAR},
+      TRADECODE = #{tradecode,jdbcType=VARCHAR},
+      PAGECODE = #{pagecode,jdbcType=VARCHAR},
+      ITEMTYPE = #{itemtype,jdbcType=VARCHAR},
+      ITEMNAME = #{itemname,jdbcType=VARCHAR},
+      ITEMEVENT = #{itemevent,jdbcType=VARCHAR}
+    where ITEMID = #{itemid,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByItemid">
+    update NAT_EXECUTE_ITEM
+    	<if test="&quot;2&quot;.equals(column.trim())">
+			set ITEMALIAS = #{input,jdbcType=VARCHAR}
+		</if>
+	    <if test="&quot;3&quot;.equals(column.trim())">
+			set ITEMVALUE = #{input,jdbcType=VARCHAR}
+		</if>
+		<if test="&quot;4&quot;.equals(column.trim())">
+			set ISSCREEN = #{input,jdbcType=VARCHAR}
+		</if>
+		<if test="&quot;5&quot;.equals(column.trim())">
+			set RELATIONVALUE = #{input,jdbcType=VARCHAR}
+		</if>
+    where ITEMID = #{itemid,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateItemIndex">
+    update NAT_EXECUTE_ITEM
+    set ITEMINDEX = #{index,jdbcType=NUMERIC}
+    where ITEMID = #{itemid,jdbcType=VARCHAR}
+  </update>
+</mapper>

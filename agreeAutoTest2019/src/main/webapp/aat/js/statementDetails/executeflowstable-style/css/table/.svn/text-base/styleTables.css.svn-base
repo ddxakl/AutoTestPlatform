@@ -1,0 +1,106 @@
+li{list-style:none;}
+.device-total{box-shadow:0 2px 18px 0 rgba(127,127,127,.5);padding-bottom:30px;margin-bottom:30px;width:100%;background:#ECF0F5}
+.device-problem-info{width:1180px;margin:-351px auto 0;background:#fff;position:relative}
+.device-total .top .left{float:left;font-size:32px;color:#333;line-height:45px;padding:30px}
+.device-total .top .right{float:right;padding:28px 30px 0 0;font-size:13px;color:#333}
+.device-total .top .right p{line-height:24px}
+.device-total .top .right p span{color:#2A2A2A}
+.device-total .bottom{margin:0 30px;border-top:1px solid #D8D8D8}
+
+.device-total .bottom .device-tab-content{margin-top:55px}
+.device-statistics-table{border-radius:5px;margin-top:-30px}
+
+.device-statistics-table .table{margin-bottom:0}
+.device-statistics-table .table thead tr{border-radius:5px 5px 0 0}
+.device-statistics-table .table th{background:#414350;height:58px;line-height:58px;font-size:14px;color:#fff;padding:0 8px;border:1px solid #E3E3E3}
+.device-statistics-table .table>thead>tr>th{border-bottom:1px solid #E3E3E3}
+.device-statistics-table .table{border-right:1px solid #E3E3E3;border-bottom:1px solid #E3E3E3;border-collapse: separate;}
+.device-statistics-table .table td{font-size:13px;color:#333;empty-cells: show;border-left:1px solid #E3E3E3;border-top:1px solid #E3E3E3;padding:13px 8px;vertical-align: middle;word-break: break-all;}
+
+.device-total .breadcrumb{padding:8px 15px;margin-bottom:20px;list-style:none;width:auto;float:left;background:0 0;margin-top:12px}
+
+.breadcrumb-tab{float:left;margin-top:20px}
+.detail-main .problem-ul-tab{margin-top:20px}
+.device-main-list{margin-left:-20px}
+.device-main-list .device-total{width:1180px;height:auto;float:left;margin-left:20px}
+.device-list h3{font-size:20px;color:#333;line-height:28px;padding:20px 0 20px 30px}
+.device-screen-dimension{margin:0 30px;border-top:1px solid #E7E7E7;padding:15px 0 10px 0}
+.device-screen-dimension .left,.device-screen-dimension .right{float:left}
+.device-screen-dimension .left{line-height:38px;width:86px;text-align:left}
+.device-screen-dimension .right{width:1000px}
+.device-screen-dimension .right ul li a{display:inline-block;font-size:13px;color:#333;width:100%;height:100%;text-align:center;position: relative;}
+.device-screen-dimension .right ul li mytab{width: 86px;height: 36px;line-height: 36px; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;display: block;}
+.device-screen-dimension .right ul li a span{color:#1080DE;margin:0 0 0 10px;font-weight:700;position: absolute; right: 5px;top: 0px;}
+.breadcrumb-tab li a:active,.breadcrumb-tab li a:focus,.breadcrumb-tab li a:hover,.breadcrumb-tab li a:visited,.device-screen-dimension .right ul li a:active,.device-screen-dimension .right ul li a:focus,.device-screen-dimension .right ul li a:hover,.device-screen-dimension .right ul li a:visited{text-decoration:none}
+.device-screen-dimension .right ul li a:hover{background:#1080DE;color:#fff}
+
+.device-screen-dimension .right li{float:left;width:100px;height:38px;line-height:38px;border:1px solid #21a1df;border-radius:3px;margin:0 10px 20px 0}
+.device-screen-dimension .right .active a{background:#1080DE;color:#fff}
+
+.device-list-tab{width:100%;background:#FFFFFF;padding:20px 25px 20px 25px}
+.breadcrumb-tab{margin-bottom:20px}
+.breadcrumb-tab li{float:left}
+.breadcrumb-tab li a{font-size:14px;color:#999}
+.breadcrumb-tab li a span{margin:0 5px}
+.breadcrumb-tab .active a{font-size:14px;color:#333}
+
+.device-statistics-table .table>tbody+tbody {border-top: none;}
+.device-screen-dimension .right{position: relative;}
+.device-screen-dimension .right ul{max-height: 96px;overflow: hidden;}
+.device-screen-dimension .right .show-hide{position: absolute;right: -50px;bottom: 22px;display: none;}
+
+.device-screen-dimension .right .active-ul{height: auto;max-height: none;}
+.device-main-list .device-list .device-total{width: 1180px;height: auto;}
+.detail-main{margin-bottom: 50px;}
+
+.device-screen-dimension .right .height-auto{max-height: none;height: auto;}
+
+.device-tab-content .tab-pane{display: none;}
+.device-tab-content .active{display: block;}
+
+.device-list-total ul{float: left;}
+.device-list-total .list-num{float: right;margin: 21px 0px 0px 0px;font-size: 14px;color: #333;}
+.device-list-total .list-num span{margin: 0px 3px;color: #666;}
+.device-list-total .list-num .loading-report span:hover{color: #1081DE;}
+
+.device-model-analysis .p1 {font-size: 20px;color: #333;line-height: 28px;margin: 20px 0 7px 27px;}
+.device-model-analysis .p2 {font-size: 14px;color: #333;line-height: 22px;margin: 0 0 20px 20px;}
+    
+.list-num .loading-report {float: right;margin: -8px 0px 0px 8px;}
+.loading-report span {display: inline-block;height: 36px;border: 1px solid #E5E5E5;padding: 0 10px;}
+.pagination {list-style-type: none;}
+.pagination li {float: left;}
+.icons {
+	float: right;
+	padding-right: 4%;
+	padding-top: 4%
+}
+
+.statisticsIcon, .tableIcon {
+	display: inline-block
+}
+
+.line {
+	display: inline-block;
+	width: 1px;
+	height: 15px;
+	background: #c6bebebd;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+.device-problem-title{
+	width:100%;height:451px;background-size: cover;
+}
+.testReportBanner span{display: block;color: #fff;text-align: center;}
+.testReportBanner .span1{font-size: 48px;
+    line-height: 67px;}
+.testReportBanner .span2{width: 60px;
+    height: 2px;
+    background: #fff;
+    margin: 6px auto 20px;}
+#deviceListModel {
+	margin: 3% 4% 3% 4%;
+}
+#deviceListModel2 {
+	margin: 4%;
+}

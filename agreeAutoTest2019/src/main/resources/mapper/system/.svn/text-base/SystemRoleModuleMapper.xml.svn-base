@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agree.system.dao.SystemRoleModuleMapper">
+  <resultMap id="BaseResultMap" type="com.agree.system.entity.SystemRoleModule">
+    <id column="ROLEMODULEID" jdbcType="VARCHAR" property="rolemoduleid" />
+    <result column="ROLEID" jdbcType="VARCHAR" property="roleid" />
+    <result column="MODULEID" jdbcType="VARCHAR" property="moduleid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ROLEMODULEID, ROLEID, MODULEID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_SYS_ROLE_MODULE
+    where ROLEMODULEID = #{rolemoduleid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllByRole" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_SYS_ROLE_MODULE
+    where ROLEID = #{roleId,jdbcType=VARCHAR}
+  </select>  
+  <select id="getModuleIdByRoleId" parameterType="java.lang.String" resultType="java.lang.String">
+    select 
+    MODULEID
+    from NAT_SYS_ROLE_MODULE
+    where ROLEID = #{roleId,jdbcType=VARCHAR}
+  </select>  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NAT_SYS_ROLE_MODULE
+    where ROLEMODULEID = #{rolemoduleid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByRoleId" parameterType="java.lang.String">
+	delete from NAT_SYS_ROLE_MODULE 
+	where ROLEID = #{roleid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.agree.system.entity.SystemRoleModule">
+    insert into NAT_SYS_ROLE_MODULE (ROLEMODULEID, ROLEID, MODULEID
+      )
+    values (#{rolemoduleid,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR}, #{moduleid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSysManage" parameterType="java.lang.String">
+    insert into NAT_SYS_ROLE_MODULE (ROLEID, MODULEID
+      )
+    values (#{roleid,jdbcType=VARCHAR}, #{moduleid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+	insert into NAT_SYS_ROLE_MODULE (ROLEID,MODULEID) 
+	<foreach collection="list" item="item" index="index" separator="UNION ALL">
+		SELECT
+    	#{item.roleid},
+    	#{item.moduleid} 
+    	FROM dual
+	</foreach>
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.agree.system.entity.SystemRoleModule">
+    insert into NAT_SYS_ROLE_MODULE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rolemoduleid != null">
+        ROLEMODULEID,
+      </if>
+      <if test="roleid != null">
+        ROLEID,
+      </if>
+      <if test="moduleid != null">
+        MODULEID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rolemoduleid != null">
+        #{rolemoduleid,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null">
+        #{roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleid != null">
+        #{moduleid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.agree.system.entity.SystemRoleModule">
+    update NAT_SYS_ROLE_MODULE
+    <set>
+      <if test="roleid != null">
+        ROLEID = #{roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleid != null">
+        MODULEID = #{moduleid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ROLEMODULEID = #{rolemoduleid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.agree.system.entity.SystemRoleModule">
+    update NAT_SYS_ROLE_MODULE
+    set ROLEID = #{roleid,jdbcType=VARCHAR},
+      MODULEID = #{moduleid,jdbcType=VARCHAR}
+    where ROLEMODULEID = #{rolemoduleid,jdbcType=VARCHAR}
+  </update>
+</mapper>

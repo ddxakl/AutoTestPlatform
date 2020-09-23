@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans    
+                        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd    
+                        http://www.springframework.org/schema/context    
+                        http://www.springframework.org/schema/context/spring-context-3.1.xsd    
+                        http://www.springframework.org/schema/mvc    
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+	<!-- 使用注解式注入 -->
+	<context:annotation-config />
+	<!-- 开启注解映射的支持 -->
+	<mvc:annotation-driven />
+	<context:property-placeholder
+		location="classpath:properties/database.properties,classpath:properties/config.properties" file-encoding="UTF-8" ignore-unresolvable="true"/>
+	<context:component-scan
+		base-package="com.agree">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+    <!--spring扫描注入bean-->
+    <context:component-scan base-package="com.agree"/>
+	<!-- 允许对静态资源文件的访问 -->
+	<mvc:default-servlet-handler />
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/index.jsp" />
+			<mvc:exclude-mapping path="/common/**" />
+			<mvc:exclude-mapping path="/login/**" />
+			<mvc:exclude-mapping path="/system/**" />
+			<mvc:exclude-mapping path="/aat/**" />
+			<mvc:exclude-mapping path="/upload/**" />
+
+			<bean
+				class="com.agree.framework.interceptor.SessionInterceptor"></bean>
+		</mvc:interceptor>
+
+
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/index.jsp" />
+			<mvc:exclude-mapping path="/common/**" />
+			<mvc:exclude-mapping path="/login/**" />
+			<mvc:exclude-mapping path="/system/**" />
+			<mvc:exclude-mapping path="/task/**" />
+			<mvc:exclude-mapping path="/upload/**" />
+
+			<bean class="com.agree.framework.interceptor.AuthInterceptor"></bean>
+		</mvc:interceptor>
+
+	</mvc:interceptors>
+
+	<!-- 1、配置需要扫描的路径 -->
+<!-- 	<context:component-scan
+		base-package="com.agree" />
+		<context:component-scan
+		base-package="com.agree" /> -->
+	<!--2、资源视图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
+		<property name="prefix" value="/WEB-INF/webpage/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<!-- 3、添加注解驱动 -->
+	<mvc:annotation-driven />
+	<!--json格式数据转换的配置 -->
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"
+		p:ignoreDefaultModelOnRedirect="true">
+		<property name="messageConverters">
+			<list>
+				<bean
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
+</beans>  

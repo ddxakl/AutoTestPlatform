@@ -1,0 +1,82 @@
+@charset "UTF-8";
+.control-label {
+	text-align: left;
+	font-size: 14px;
+	color: #333;
+	font-weight: 400;
+	padding: 0;
+	height: 32px;
+	line-height: 32px;
+	width: 80px;
+}
+
+.fileinput {
+	height: 32px;
+	line-height: 32px;
+	width: 94px;
+}
+
+#_fileDiv>* {
+	display: inline;
+}
+
+#test>* {
+	display: inline-block;
+}
+
+#test {
+	/* font-size: 0px; */
+	
+}
+
+.fileinput>* {
+	display: inline-block !important;
+}
+
+#caseItem>.modal-dialog {
+	width: 900px !important;
+}
+
+#dataPlugin .modal-body {
+	padding: 0;
+	margin: 12px 20px 20px 20px
+}
+
+#breadLine {
+	border: 0.1px solid #999;
+	background: #999;
+	margin-bottom: 15px;
+	margin-top: -15px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.breadcrumb {
+	display: inline-block;
+}
+
+#upload {
+	display: inline-block;
+	float: right;
+	border: none;
+	border-radius: 3px;
+	margin-top: 6px;	
+	color: #fff;
+	background-color: #1081de;
+	border-color: #1081de;
+}
+
+td>a {
+	margin-right: 20px;
+	color: #1081de;
+	text-decoration: none;
+}
+
+#operate {
+	width: 300px;
+}
+
+#upload>i {
+	line-height: 1;
+	margin-right: 4px;
+}

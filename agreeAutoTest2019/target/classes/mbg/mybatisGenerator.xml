@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+	  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+	  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<properties resource="./properties/database.properties" />
+	<context id="sysGenerator" targetRuntime="MyBatis3">
+
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+
+		<!-- 数据库链接URL、用户名、密码 -->
+		<jdbcConnection
+			driverClass="${dataSource.driverClassName}"
+			connectionURL="${dataSource.url}" userId="${dataSource.username}"
+			password="${dataSource.password}">
+
+		</jdbcConnection>
+
+		<javaModelGenerator
+			targetPackage="com.agree.system.entity"
+			targetProject="./src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<sqlMapGenerator targetPackage="mapper.system"
+			targetProject="./src/main/resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.agree.system.dao" targetProject="./src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		
+		<!-- table ↓ -->	
+		<table tableName="NAT_SYS_USER_ROLE"
+			domainObjectName="SystemUserRole" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		
+		
+		
+		<!-- <table tableName="NAT_SYS_USER"
+			domainObjectName="SystemUser" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="false" />
+		</table> -->
+			
+		<!-- <table tableName="NAT_SYS_MOUDLE"
+			domainObjectName="SystemModule" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="false" />
+		</table> -->
+		
+		<!-- <table tableName="NAT_EXECUTE_FLOWS_COUNT"
+			domainObjectName="ExecuteFlowsCount" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="false" />
+		</table> -->
+		
+		<!-- <table tableName="NAT_SYS_ROLE"
+			domainObjectName="SystemRole" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="false" />
+		</table> -->
+		
+<!-- 		<table tableName="NAT_EXECUTE_PLAN"
+			domainObjectName="ExecutePlan" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="false" />
+		</table> -->
+		
+<!-- 		<table tableName="NAT_PLANEXECUTE_FLOWS"
+			domainObjectName="ExecutePlanFlows" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="false" />
+		</table> -->
+		
+		
+		<!-- <table tableName="NAT_EXECUTE_CASE"
+			domainObjectName="ExecuteCase" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="false" />
+		</table> -->
+		
+		<!-- 填入表名-->
+		<!-- <table tableName="NAT_EXECUTE_FLOWS"
+			domainObjectName="ExecuteFlows" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="false" />
+
+		</table> -->
+	<!-- 	<table tableName="NAT_EXECUTE_RESOURCE"
+			domainObjectName="ExecuteResource" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="false" />
+
+		</table> -->
+
+	<!-- 	<table tableName="NAT_EXECUTE_CASE"
+			domainObjectName="ExecuteCase" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="false" />
+
+		</table>
+
+
+		<table tableName="NAT_SYS_USER" domainObjectName="SystemUser"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+
+
+		<table tableName="NAT_EXECUTE_FLOWS"
+			domainObjectName="ExecuteFlows" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="false" />
+
+		</table> -->
+		<!-- <table tableName="NAT_SYS_TERMINAL" domainObjectName="SystemTerminal" 
+			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
+			enableSelectByExample="false" selectByExampleQueryId="false"> <property name="useActualColumnNames" 
+			value="false" /> </table> <table tableName="NAT_EXECUTE_ITEM" domainObjectName="ExecuteItem" 
+			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
+			enableSelectByExample="false" selectByExampleQueryId="false"> <property name="useActualColumnNames" 
+			value="false" /> </table> <table tableName="NAT_EXECUTE_PLAN" domainObjectName="ExecutePlan" 
+			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
+			enableSelectByExample="false" selectByExampleQueryId="false"> <property name="useActualColumnNames" 
+			value="false" /> </table> -->
+
+	</context>
+</generatorConfiguration>

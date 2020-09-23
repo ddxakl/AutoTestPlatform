@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agree.aat.dao.ExecuteFlowsCountMapper">
+  <resultMap id="BaseResultMap" type="com.agree.aat.entity.ExecuteFlowsCount">
+    <id column="EXEFLOWSCOUNTID" jdbcType="VARCHAR" property="exeflowscountid" />
+    <result column="PLANID" jdbcType="VARCHAR" property="planid" />
+    <result column="CASEID" jdbcType="VARCHAR" property="caseid" />
+    <result column="TOTAL" jdbcType="NUMERIC" property="total" />
+    <result column="SUCCESS" jdbcType="NUMERIC" property="success" />
+    <result column="FAIL" jdbcType="NUMERIC" property="fail" />
+    <result column="PASSRATE" jdbcType="VARCHAR" property="passrate" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="CASENAME" jdbcType="VARCHAR" property="casename" />
+    <result column="PLANFLOWID" jdbcType="VARCHAR" property="planflowid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    EXEFLOWSCOUNTID, PLANID, CASEID, TOTAL, SUCCESS, FAIL, PASSRATE, REMARK, CASENAME,PLANFLOWID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NAT_EXECUTE_FLOWS_COUNT
+    where EXEFLOWSCOUNTID = #{exeflowscountid,jdbcType=VARCHAR}
+  </select>
+  <select id="getExecuteFlowsCountListNoPage" resultMap="BaseResultMap">			
+	  select 
+	  	<include refid="Base_Column_List" />
+	  	from NAT_EXECUTE_FLOWS_COUNT 
+	  	where PLANFLOWID = #{planflowid,jdbcType=VARCHAR}
+  </select>
+   <select id="getEFCount" parameterType="java.lang.String" resultMap="BaseResultMap">			
+	  select 
+	  	<include refid="Base_Column_List" />
+	  	from NAT_EXECUTE_FLOWS_COUNT 
+	  	where PLANID = #{planid,jdbcType=VARCHAR}
+	  	AND CASEID = #{caseid,jdbcType=VARCHAR}
+	  	AND PLANFLOWID = #{planflowid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from NAT_EXECUTE_FLOWS_COUNT
+    where EXEFLOWSCOUNTID = #{exeflowscountid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.agree.aat.entity.ExecuteFlowsCount">
+    insert into NAT_EXECUTE_FLOWS_COUNT (EXEFLOWSCOUNTID, PLANID, CASEID, 
+      TOTAL, SUCCESS, FAIL, 
+      PASSRATE, REMARK, CASENAME,PLANFLOWID
+      )
+    values (#{exeflowscountid,jdbcType=VARCHAR}, #{planid,jdbcType=VARCHAR}, #{caseid,jdbcType=VARCHAR}, 
+      #{total,jdbcType=NUMERIC}, #{success,jdbcType=NUMERIC}, #{fail,jdbcType=NUMERIC}, 
+      #{passrate,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{casename,jdbcType=VARCHAR},#{planflowid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.agree.aat.entity.ExecuteFlowsCount">
+    insert into NAT_EXECUTE_FLOWS_COUNT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="exeflowscountid != null">
+        EXEFLOWSCOUNTID,
+      </if>
+      <if test="planid != null">
+        PLANID,
+      </if>
+      <if test="caseid != null">
+        CASEID,
+      </if>
+      <if test="total != null">
+        TOTAL,
+      </if>
+      <if test="success != null">
+        SUCCESS,
+      </if>
+      <if test="fail != null">
+        FAIL,
+      </if>
+      <if test="passrate != null">
+        PASSRATE,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="casename != null">
+        CASENAME,
+      </if>
+       <if test="planflowid != null">
+        PLANFLOWID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="exeflowscountid != null">
+        #{exeflowscountid,jdbcType=VARCHAR},
+      </if>
+      <if test="planid != null">
+        #{planid,jdbcType=VARCHAR},
+      </if>
+      <if test="caseid != null">
+        #{caseid,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=NUMERIC},
+      </if>
+      <if test="success != null">
+        #{success,jdbcType=NUMERIC},
+      </if>
+      <if test="fail != null">
+        #{fail,jdbcType=NUMERIC},
+      </if>
+      <if test="passrate != null">
+        #{passrate,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="casename != null">
+        #{casename,jdbcType=VARCHAR},
+      </if><if test="planflowid != null">
+        #{planflowid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.agree.aat.entity.ExecuteFlowsCount">
+    update NAT_EXECUTE_FLOWS_COUNT
+    <set>
+      <if test="planid != null">
+        PLANID = #{planid,jdbcType=VARCHAR},
+      </if>
+      <if test="caseid != null">
+        CASEID = #{caseid,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null">
+        TOTAL = #{total,jdbcType=NUMERIC},
+      </if>
+      <if test="success != null">
+        SUCCESS = #{success,jdbcType=NUMERIC},
+      </if>
+      <if test="fail != null">
+        FAIL = #{fail,jdbcType=NUMERIC},
+      </if>
+      <if test="passrate != null">
+        PASSRATE = #{passrate,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="casename != null">
+        CASENAME = #{casename,jdbcType=VARCHAR},
+      </if>
+      <if test="planflowid != null">
+        PLANFLOWID = #{planflowid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where EXEFLOWSCOUNTID = #{exeflowscountid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.agree.aat.entity.ExecuteFlowsCount">
+    update NAT_EXECUTE_FLOWS_COUNT
+    set PLANID = #{planid,jdbcType=VARCHAR},
+      CASEID = #{caseid,jdbcType=VARCHAR},
+      TOTAL = #{total,jdbcType=NUMERIC},
+      SUCCESS = #{success,jdbcType=NUMERIC},
+      FAIL = #{fail,jdbcType=NUMERIC},
+      PASSRATE = #{passrate,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CASENAME = #{casename,jdbcType=VARCHAR},
+      PLANFLOWID = #{planflowid,jdbcType=VARCHAR}
+    where EXEFLOWSCOUNTID = #{exeflowscountid,jdbcType=VARCHAR}
+  </update>
+</mapper>
